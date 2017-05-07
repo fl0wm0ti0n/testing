@@ -11,7 +11,7 @@
 #include "home_doggle.h"
 #include "home_constants.h"
 #include "home_touch.h"
-#include <FastLED.h>
+//#include <FastLED.h>
 
 /*
 	//*******************************************************
