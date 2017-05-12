@@ -5,9 +5,10 @@
 #include "home_motion.h"
 #include "home_constants.h"
 
-home_motion::home_motion()
+home_motion::home_motion(String n, int p)
+	:home_sensor(tSensorType::digitalIn_sens, n, p)
 {
-	Serial.println("--motion aufgerufen--");
+	home_sensor::getValue(digitalRead(p));
 }
 
 home_motion::~home_motion()
@@ -16,33 +17,33 @@ home_motion::~home_motion()
 
 }
 
-int home_motion::setPin(int iPin)
+bool home_motion::getValue(int v)
 {
-	iPinNum = iPin;
-	pinMode(iPinNum, INPUT);
-}
+	int iMotionState = 0;
+	int iMotionValue = 0;
+	Serial.begin(9600);
+	Serial.println("GetValue");
+	if (getValue(getPin()) != v)
+	{
 
-int home_motion::getValue()
-{
-
-		// Motion dedection only if status changes
-		if (digitalRead(iPinNum) == LOW && iMotionState != 0)
+		home_sensor::getValue(getPin());
+		if (digitalRead(getPin()) == LOW && iMotionState != 0)
 		{
 			iMotionValue = 0;
 			Serial.println("keine bewegung erkannt");
 			iMotionState = 0;
 		}
-		if (digitalRead(iPinNum) == HIGH && iMotionState != 1)
+		if (digitalRead(getPin()) == HIGH && iMotionState != 1)
 		{
 			iMotionValue = 1;
 			Serial.println("bewegung erkannt");
 			iMotionState = 1;
 		}
 
-	return iMotionValue;
-}
-
-int home_motion::getAnalog()
-{
+		if (iMotionValue = 1)
+		{
+			return true;
+		}
+	}
 
 }

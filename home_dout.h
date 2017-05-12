@@ -20,7 +20,7 @@ public:
 
 	 virtual bool setValue(int v);
 
-	 bool Doggle();
+	 bool doggle();
 
 protected:
 

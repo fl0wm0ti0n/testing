@@ -15,13 +15,13 @@
 
 enum tActorType
 {
-	undefined = 0,
-	digitalOut = 1,
-	AnalogOut = 2,
-	I2C = 3,
-	WS2812 = 4,
-	PWM = 5,
-	RGB = 6
+	undefined_act = 0,
+	digitalOut_act = 1,
+	AnalogOut_act = 2,
+	I2C_act = 3,
+	WS2812_act = 4,
+	PWM_act = 5,
+	RGB_act = 6
 };
 
 class home_actor

@@ -10,7 +10,7 @@
 home_sensor::home_sensor(tSensorType t, String n, int p)
 	:m_iType(t), m_cName(n), m_iValue(0), m_iPin(p)
 {
-	pinMode(m_iPin, OUTPUT);
+	pinMode(m_iPin, INPUT);
 }
 
 home_sensor::~home_sensor()
@@ -18,7 +18,7 @@ home_sensor::~home_sensor()
 
 }
 
-bool home_sensor::setValue(int v)
+bool home_sensor::getValue(int v)
 {
 	m_iValue = v;
 	return true;

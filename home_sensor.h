@@ -15,10 +15,10 @@
 
 enum tSensorType
 {
-	undefined = 0,
-	DigitalIn = 1,
-	AnalogIn = 2,
-	I2C = 3
+	undefined_sens = 0,
+	digitalIn_sens = 1,
+	analogIn_sens = 2,
+	I2C_sens = 3
 
 };
 
@@ -29,26 +29,18 @@ public:
 	virtual ~home_sensor();
 
 	inline tSensorType getType()
-	{
-		return m_iType;
-	}
+	{return m_iType;}
 
 	inline String getName()
-	{
-		return m_cName;
-	}
+	{return m_cName;}
 
-	inline int getValue()
-	{
-		return m_iValue;
-	}
+	//inline int getValue()
+	//{return m_iValue;}
 
 	inline int getPin()
-	{
-		return m_iPin;
-	}
+	{return m_iPin;}
 
-	virtual bool setValue(int v);
+	virtual bool getValue(int v);
 
 protected:
 

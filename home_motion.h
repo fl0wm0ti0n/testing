@@ -9,22 +9,19 @@
 	#include "WProgram.h"
 #endif
 
-class home_motion
+#include "home_sensor.h"
+
+class home_motion :public home_sensor
 {
 
-private:
-	int iMotionValue;
-	int	iPinNum;
-	int iMotionState;
-
 public:
-	home_motion();						// Constructor
+	home_motion(String n, int p);		// Constructor
 	virtual ~home_motion();				// Destructor
 
-	int getAnalog();					// Method: get Touch Analog Value
-	int getValue();						// Method: get Touch Value
-	int setPin(int iPin);				// Method: set Touch Pin
+	virtual bool getValue(int v);		// Method: get motion Value
 
+
+protected:
 
 };
 
