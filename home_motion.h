@@ -19,10 +19,8 @@ public:
 	virtual ~home_motion();				// Destructor
 
 	virtual bool getValue(int v);		// Method: get motion Value
-
-
-protected:
-
+	int iMotionState = 0;
+	bool iMotionValue = false;
 };
 
 #endif

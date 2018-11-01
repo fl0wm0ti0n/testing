@@ -14,10 +14,7 @@ home_touch::home_touch()
 }
 
 home_touch::~home_touch()
-{
-
-
-}
+= default;
 
 int home_touch::setPin(int iPin)
 {

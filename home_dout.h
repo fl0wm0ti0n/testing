@@ -21,10 +21,6 @@ public:
 	 virtual bool setValue(int v);
 
 	 bool doggle();
-
-protected:
-
-
 };
 
 #endif

@@ -3,31 +3,31 @@
 // 
 // 
 
-#include "home_dout.h"
+#include "home_aout.h"
 
-home_dout::home_dout(String n, int p)
+home_aout::home_aout(String n, int p)
 	:home_actor(tActorType::digitalOut_act, n, p)
 {
-	home_actor::setValue(digitalRead(p));
+	home_actor::setValue(analogRead(p));
 }
 
-home_dout::~home_dout()
+home_aout::~home_aout()
 {
 }
 
-bool home_dout::setValue(int v)
+bool home_aout::setValue(int v)
 {
 	//Serial.begin(9600);
 	if (getValue() != v)
 	{
 		//Serial.println("SetValue");
 		home_actor::setValue(v);
-		digitalWrite(getPin(),v);
+		analogWrite(getPin(), v);
 	}
 	return true;
 }
 
-bool home_dout::doggle()
+bool home_aout::doggle()
 {
 	return setValue(!getValue());
 }

@@ -18,7 +18,7 @@
 #define PIN_PWM_5		11
 
 //****** INPUT PINS ******
-#define	PIN_TOUCH_1		2
+#define	PIN_HUM_1		2
 #define	PIN_TOUCH_2		4
 #define	PIN_MOTION_1	3
 #define	PIN_MOTION_2	7
