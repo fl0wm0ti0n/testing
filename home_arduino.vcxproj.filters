@@ -31,12 +31,6 @@
     <Filter Include="Source Files\misc">
       <UniqueIdentifier>{fb0291db-a479-4197-9b80-386a45ac4891}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\functions">
-      <UniqueIdentifier>{bbe92cb3-1026-4482-a354-f1efe29c89a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\functions">
-      <UniqueIdentifier>{3d24750e-2fa4-4e4e-9b5b-bf6b4f98ce17}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="home_arduino.ino" />
@@ -72,9 +66,6 @@
     <ClInclude Include="home_aout.h">
       <Filter>Header Files\actors</Filter>
     </ClInclude>
-    <ClInclude Include="home_ain.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home_actor.cpp">
@@ -100,9 +91,6 @@
     </ClCompile>
     <ClCompile Include="home_aout.cpp">
       <Filter>Source Files\actors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_ain.cpp">
-      <Filter>Source Files\sensors</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

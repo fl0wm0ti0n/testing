@@ -1,4 +1,4 @@
-// home_aout.h
+// home_dout.h
 
 #ifndef _HOME_AOUT_h
 #define _HOME_AOUT_h

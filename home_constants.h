@@ -28,9 +28,6 @@
 #define	NUM_LEDS_1		60
 #define	NUM_LEDS_2		60
 
-//****** Konfig ******
-#define DELAY_LIGHT_UP		70
-#define DELAY_LIGHT_DOWN	70
 
 /* 
 #if defined(ARDUINO) && ARDUINO >= 100

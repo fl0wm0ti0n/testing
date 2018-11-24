@@ -12,7 +12,8 @@ home_aout::home_aout(String n, int p)
 }
 
 home_aout::~home_aout()
-= default;
+{
+}
 
 bool home_aout::setValue(int v)
 {

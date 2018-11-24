@@ -4,13 +4,7 @@
 // @date           12.2016
 // @brief          main routine
 
-#include <EthernetUdp.h>
-#include <EthernetServer.h>
-#include <EthernetClient.h>
-#include <Ethernet.h>
-#include <Dns.h>
-#include <Dhcp.h>
-#include "FastLED.h"
+#include <FastLED.h>
 #include "home_sensor.h"
 #include "home_dout.h"
 #include "home_actor.h"
@@ -20,7 +14,6 @@
 #include "home_touch.h"
 #include "home_aout.h"
 #include "DHT.h"
-#include "home_ain.h"
 
 
 	//*******************************************************
@@ -33,6 +26,7 @@ int idelay = 0;
 int bright = 1;
 
 int numstops = round(255 / NUM_LEDS_1);
+
 
 void LED_WS2812(int onoff)
 {
@@ -80,15 +74,9 @@ void setup()
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
 	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 
-	float temp;
-	float hum;
-	float savetemp;
-	float savehum;
-
 	DHT dht(PIN_HUM_1, DHT22);
 
 	dht.begin();
-
 
 	while (true)
 	{
@@ -101,9 +89,10 @@ void setup()
 				for (int i = 1; i <= 255; ++i)
 				{
 					light2.setValue(i);
-					delay(DELAY_LIGHT_UP);
+					delay(20);
 				}
 				light2.setValue(255);
+				LED_WS2812(1);
 			}
 		}
 		else
@@ -114,27 +103,23 @@ void setup()
 				for (int j = 255; j >= 0; --j)
 				{
 					light2.setValue(j);
-					delay(DELAY_LIGHT_DOWN);
+					delay(20);
 				}
 				light2.setValue(0);
+				LED_WS2812(0);
 			}
 		}
-		
-		temp = dht.readTemperature();
-		hum = dht.readHumidity();
 
-		if (temp != savetemp || hum != savehum)
-		{
-			Serial.print("Temperatur: ");
-			Serial.print(temp);
-			Serial.print("°C, ");
-			Serial.print("Feuchtigkeit: ");
-			Serial.print(hum);
-			Serial.println("%");
+		float temp = dht.readTemperature();
+		float hum = dht.readHumidity();
 
-			savetemp = temp;
-			savehum = hum;
-		}
+		Serial.print("Temperatur: ");
+		Serial.print(temp);
+		Serial.print("°C, ");
+		Serial.print("Feuchtigkeit: ");
+		Serial.print(hum);
+		Serial.println("%");
+
 		delay(500);
 	}
 }
@@ -144,6 +129,6 @@ void setup()
 	//*******************************************************
 void loop()
 {
-	LED_WS2812(1);
+
 }
 
