@@ -15,7 +15,6 @@ home_motion::home_motion(String n, int p)
 home_motion::~home_motion()
 {
 
-
 }
 
 bool home_motion::getValue(int v)

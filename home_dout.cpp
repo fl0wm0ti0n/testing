@@ -12,8 +12,7 @@ home_dout::home_dout(String n, int p)
 }
 
 home_dout::~home_dout()
-{
-}
+= default;
 
 bool home_dout::setValue(int v)
 {

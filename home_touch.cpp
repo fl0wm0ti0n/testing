@@ -32,5 +32,8 @@ int home_touch::getValue()
 
 int home_touch::getAnalog()
 {
-
+	iTouchValue = analogRead(iPinNum);
+	Serial.print("analogRead: ");
+	Serial.println(iTouchValue);
+	return iTouchValue;
 }

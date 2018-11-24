@@ -1,7 +1,7 @@
-// home_touch.h
+// home_ain.h
 
-#ifndef _HOME_TOUCH_h
-#define _HOME_TOUCH_h
+#ifndef _HOME_AIN_h
+#define _HOME_AIN_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -9,16 +9,17 @@
 	#include "WProgram.h"
 #endif
 
-class home_touch
+#include "home_sensor.h"
+
+class home_ain : public home_sensor
 {
 	private:
-		int iSwitch;
-		int iTouchValue;
+		int iAnalogValue;
 		int	iPinNum;
 
 	public:
-		home_touch();						// Constructor
-		virtual ~home_touch();				// Destructor
+		home_ain(String n, int p);			// Constructor
+		virtual ~home_ain();				// Destructor
 
 		int getAnalog();					// Method: get Touch Analog Value
 		int getValue();						// Method: get Touch Value
