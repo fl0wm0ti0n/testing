@@ -75,6 +75,9 @@
     <ClInclude Include="home_ain.h">
       <Filter>Header Files\sensors</Filter>
     </ClInclude>
+    <ClInclude Include="__vm\.WS2812B-Test.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home_actor.cpp">
