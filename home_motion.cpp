@@ -20,29 +20,20 @@ home_motion::~home_motion()
 
 bool home_motion::getValue(int v)
 {
+	home_sensor::getValue(getPin());
+	if (digitalRead(getPin()) == LOW && iMotionState != 0)
+	{
+		iMotionState = 0;
+		iMotionValue = false;
+		Serial.println("keine bewegung erkannt");
 
-	//bool iMotionValue = false;
-	//Serial.begin(9600);
-	//Serial.println("GetValue");
-	//if (getValue(getPin()) != v)
-	//{
+	}
+	if (digitalRead(getPin()) == HIGH && iMotionState != 1)
+	{
+		iMotionState = 1;
+		iMotionValue = true;
+		Serial.println("bewegung erkannt");
 
-		home_sensor::getValue(getPin());
-		if (digitalRead(getPin()) == LOW && iMotionState != 0)
-		{
-			iMotionState = 0;
-			iMotionValue = false;
-			Serial.println("keine bewegung erkannt");
-
-		}
-		if (digitalRead(getPin()) == HIGH && iMotionState != 1)
-		{
-			iMotionState = 1;
-			iMotionValue = true;
-			Serial.println("bewegung erkannt");
-
-		}
-			return iMotionValue;
-	//}
-
+	}
+		return iMotionValue;
 }

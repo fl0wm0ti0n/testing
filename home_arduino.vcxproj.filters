@@ -66,6 +66,18 @@
     <ClInclude Include="home_aout.h">
       <Filter>Header Files\actors</Filter>
     </ClInclude>
+    <ClInclude Include="home_ain.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="home_dht.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="randomtemplight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neopixelobjekt.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home_actor.cpp">
@@ -80,9 +92,6 @@
     <ClCompile Include="home_touch.cpp">
       <Filter>Source Files\sensors</Filter>
     </ClCompile>
-    <ClCompile Include="home_constants.cpp">
-      <Filter>Source Files\misc</Filter>
-    </ClCompile>
     <ClCompile Include="home_doggle.cpp">
       <Filter>Source Files\misc</Filter>
     </ClCompile>
@@ -91,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="home_aout.cpp">
       <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="home_ain.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="home_dht.cpp">
+      <Filter>Source Files\sensors</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

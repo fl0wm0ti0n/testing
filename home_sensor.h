@@ -18,7 +18,8 @@ enum tSensorType
 	undefined_sens = 0,
 	digitalIn_sens = 1,
 	analogIn_sens = 2,
-	I2C_sens = 3
+	I2C_sens = 3,
+	DHT_sens = 4
 
 };
 
