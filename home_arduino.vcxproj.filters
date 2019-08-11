@@ -78,6 +78,9 @@
     <ClInclude Include="neopixelobjekt.h">
       <Filter>Header Files\actors</Filter>
     </ClInclude>
+    <ClInclude Include="home_gas.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home_actor.cpp">
@@ -105,6 +108,9 @@
       <Filter>Source Files\sensors</Filter>
     </ClCompile>
     <ClCompile Include="home_dht.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="home_gas.cpp">
       <Filter>Source Files\sensors</Filter>
     </ClCompile>
   </ItemGroup>

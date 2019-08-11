@@ -8,7 +8,6 @@
 home_dht::home_dht(String n, int p)
 	:home_sensor(tSensorType::DHT_sens, n, p)
 {
-	//home_sensor::getValue(digitalRead(p));
 	dht.begin();
 }
 
@@ -17,8 +16,28 @@ home_dht::~home_dht()
 
 float home_dht::getTempValue()
 {
-	//home_sensor::getValue(getPin());
+	temp = dht.readTemperature();
+		
+	Serial.print("Temperatur: ");
+	Serial.print(temp);
+	Serial.println("°C, ");
 
+	return temp;
+}
+
+float home_dht::getHumValue()
+{
+	hum = dht.readHumidity();
+
+	Serial.print("Feuchtigkeit: ");
+	Serial.print(hum);
+	Serial.println("%");
+
+	return hum;
+}
+
+float home_dht::getTempValueOnlyIfChanged()
+{
 	temp = dht.readTemperature();
 
 	if (temp != savetemp)
@@ -31,13 +50,9 @@ float home_dht::getTempValue()
 	return temp;
 }
 
-float home_dht::getHumValue()
+float home_dht::getHumValueOnlyIfChanged()
 {
-	//home_sensor::getValue(getPin());
-
-	temp = dht.readTemperature();
 	hum = dht.readHumidity();
-
 
 	if (hum != savehum)
 	{

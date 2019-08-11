@@ -24,9 +24,10 @@ class home_dht :public home_sensor
 public:
 		home_dht(String n, int p);			// Constructor
 		virtual ~home_dht();				// Destructor
-		float getTempValue();		// Method: get Value
-		float getHumValue();		// Method: get Value
-
+		float getTempValue();				// Method: get Value
+		float getHumValue();				// Method: get Value
+		float getTempValueOnlyIfChanged();	// Method: get Value
+		float getHumValueOnlyIfChanged();	// Method: get Value
 };
 
 #endif

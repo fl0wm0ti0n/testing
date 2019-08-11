@@ -23,6 +23,3 @@ bool home_sensor::getValue(int v)
 	m_iValue = v;
 	return true;
 }
-
-
-

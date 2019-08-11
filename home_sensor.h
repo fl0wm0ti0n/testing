@@ -19,7 +19,8 @@ enum tSensorType
 	digitalIn_sens = 1,
 	analogIn_sens = 2,
 	I2C_sens = 3,
-	DHT_sens = 4
+	DHT_sens = 4,
+	gas_sens = 5
 
 };
 

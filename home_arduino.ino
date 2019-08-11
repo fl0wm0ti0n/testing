@@ -4,7 +4,6 @@
 // @brief          main routine
 
 #include <DHT.h>
-#include <FastLED.h>
 #include "home_sensor.h"
 #include "home_dout.h"
 #include "home_actor.h"
@@ -17,17 +16,21 @@
 #include "home_ain.h"
 #include "randomtemplight.h"
 #include "neopixelobjekt.h"
-
+#include "home_gas.h"
 
 //*******************************************************
 //********************* DECLARATION *********************
 //*******************************************************
 
-home_aout lightStripe("lightstripe 1", PIN_PWM_1);
+int lightcounter = 0;
+int lightdoggle = 0;
+int lightswitch = 1;
+
+home_aout lightStripe("lightstripe 1", PIN_PWM_2);
 home_motion motionSensor("motionsensor 1", PIN_MOTION_1);
 home_dht dhtSensor("dhtsensor 1", PIN_HUM_1);
-home_ain gasSensor("gassensor 1 - MQ135", PIN_GAS_MQ135_1);
-home_ain gasSensor2("gassensor 2 - MQ7", PIN_GAS_MQ7_1);
+home_gas gasSensor("gassensor 1 - MQ135", PIN_GAS_MQ135_1);
+home_gas gasSensor2("gassensor 2 - MQ7", PIN_GAS_MQ7_1);
 
 // Variablen deklarieren in denen die Startzeiten
 // der einzelnen Zeitfunktionen gespeichert werden
@@ -38,6 +41,9 @@ unsigned long startzeit_4 = 0;
 unsigned long startzeit_5 = 0;
 
 // Definitionen der einzelnen Schaltzeiten
+#define        laufzeit_10		10UL
+#define        laufzeit_20		20UL
+#define        laufzeit_30		30UL
 #define        laufzeit_500		500UL
 #define        laufzeit_1k		1000UL
 #define        laufzeit_1k5		1500UL
@@ -45,13 +51,17 @@ unsigned long startzeit_5 = 0;
 #define        laufzeit_5k		5000UL
 
 
-void motionCheck()
+void LichtKomplettSchalten_SobaldImpuls()
 {
+	// Wenn Bewegung "light up" bis das Licht ganz an ist nach einer am Motionsensor eingestellten Zeit geht das licht wieder aus.
+
 	if (motionSensor.getValue(PIN_MOTION_1) == true)
 	{
 		if (lightStripe.getValue() != 255)
 		{
 			Serial.println("On");
+			Serial.println(lightStripe.getValue());
+
 			for (int i = 0; i <= 255; ++i)
 			{
 				lightStripe.setValue(i);
@@ -65,6 +75,7 @@ void motionCheck()
 		if (lightStripe.getValue() != 0)
 		{
 			Serial.println("Off");
+			Serial.println(lightStripe.getValue());
 			for (int j = 255; j >= 0; --j)
 			{
 				lightStripe.setValue(j);
@@ -75,63 +86,108 @@ void motionCheck()
 	}
 }
 
+void LichtAnSolangeInputImpulsAn()
+{
+	// Wenn Bewegung "light up" - sobald keine Bewegung "light down"
+	// Impuls effect
+	// Mit Motionsensor justierbar
+
+	if (motionSensor.getValue(PIN_MOTION_1) == true)
+	{
+		if (lightStripe.getValue() != 255)
+		{
+			Serial.println("On");
+			Serial.println(lightStripe.getValue());
+			if (lightStripe.getValue() <= 255)
+			{
+				Serial.println(lightcounter);
+				lightcounter++;
+				lightStripe.setValue(lightcounter);
+			}
+		}
+	}
+	else
+	{
+		if (lightStripe.getValue() != 0)
+		{
+			Serial.println("Off");
+			Serial.println(lightStripe.getValue());
+			if (lightStripe.getValue() >= 0)
+			{
+				lightcounter--;
+				Serial.println(lightcounter);
+				lightStripe.setValue(lightcounter);
+			}
+		}
+	}
+}
+
+void LichtAnSolangeInputImpulsAn_AusErlaubtNach255()
+{
+	// Wenn Bewegung "light up" bis volle Stärke - erst danach "light off"
+	// NICHT mit Motionsensor justierbar
+	
+		if (lightStripe.getValue() != 255 && lightdoggle == 0)
+		{
+			if (lightStripe.getValue() <= 255 && motionSensor.getValue(PIN_MOTION_1) == true)
+			{
+				/*Serial.print("On1 = ");
+				Serial.println(lightcounter);*/
+				lightcounter++;
+				lightStripe.setValue(lightcounter);
+				lightdoggle = 0;
+				lightswitch = 0;
+			}
+			else if (lightcounter <= 255 && motionSensor.getValue(PIN_MOTION_1) == false)
+			{
+				/*Serial.print("On2 = ");
+				Serial.println(lightcounter);*/
+				lightStripe.setValue(lightcounter);
+				if (lightswitch == 0) { lightcounter++;}
+			}
+		}
+		else
+		{
+			lightdoggle = 1;
+		}
+
+		if (lightStripe.getValue() != 0 && lightdoggle == 1 && motionSensor.getValue(PIN_MOTION_1) == false)
+		{
+			if (lightStripe.getValue() > 0)
+			{
+				/*Serial.print("Off = ");
+				Serial.println(lightcounter);*/
+				lightcounter--;
+				lightStripe.setValue(lightcounter);
+				lightdoggle = 1;
+				lightswitch = 1;
+			}
+		}
+		else
+		{
+			lightdoggle = 0;
+		}
+}
+
+void motionCheck()
+{
+	//ichtAnSolangeInputImpulsAn_AusErlaubtNach255();
+	LichtAnSolangeInputImpulsAn();
+	//LichtKomplettSchalten_SobaldImpuls();
+}
+
 void dhtCheck()
 {
-	if (dhtSensor.getHumValue() <= 40) { LED_TempColor("arctic"); }
-	if (dhtSensor.getTempValue() <= 20 && dhtSensor.getHumValue() <= 50) { LED_TempColor("blue"); }
-	if (dhtSensor.getTempValue() > 20 && dhtSensor.getTempValue() <= 23 && dhtSensor.getHumValue() > 50) { LED_TempColor("green"); }
-	if (dhtSensor.getTempValue() > 23 && dhtSensor.getTempValue() <= 25 && dhtSensor.getHumValue() >= 60) { LED_TempColor("yellow"); }
-	if (dhtSensor.getTempValue() > 25 && dhtSensor.getTempValue() <= 27 && dhtSensor.getHumValue() >= 70) { LED_TempColor("orange"); }
-	if (dhtSensor.getTempValue() > 27 && dhtSensor.getHumValue() >= 80) { LED_TempColor("red"); }
-}
+	Serial.println("Checking DHT ...");
+	float hum = dhtSensor.getHumValueOnlyIfChanged();
+	float temp = dhtSensor.getTempValueOnlyIfChanged();
 
-void GasCheckCO2(home_ain sensor)
-{
-	float value;
-	float sensorValue;
-	float resistance;
-
-	#define RLOAD 10.0
-	#define RZERO 76.63
-	#define PARA 116.6020682
-	#define PARB 2.769034857
-
-	sensorValue = sensor.getValue();
-	resistance = (1023. / (float)sensorValue * 5. - 1.)*RLOAD;
-
-	value = PARA * pow(resistance / RZERO, -PARB);
-
-	Serial.print(sensor.getName());
-	Serial.print(": ");
-	Serial.println(value);
-}
-
-void GasCheckCO(home_ain sensor)
-{
-
-	float vRatio = 0;
-	float sensorValue = 0;
-	float ppm = 0;
-	int v_in = 5;
-	float v_out;
-	float sensorResistance = 0;
-
-	sensorValue = sensor.getValue();
-
-	#define coefficient_A 19.32
-	#define coefficient_B -0.64
-
-	//Load resistance 10 Kohms on the sensor potentiometer
-	#define R_Load 10.0
-
-	v_out = (float)sensorValue * (v_in / 1023.0);
-	vRatio = (v_in - v_out) / v_out;
-	sensorResistance = R_Load * vRatio;
-	ppm = (float)(coefficient_A * pow(vRatio, coefficient_B));
-
-	Serial.print(sensor.getName());
-	Serial.print(": ");
-	Serial.println(ppm);
+	if (			  temp	<= 20 && hum <= 50)	{ LED_TempColor("arctic"); }
+	if (temp >	20 && temp	<= 23 && hum <= 50) { LED_TempColor("blue"); }
+	if (temp >	23 && temp	<= 25 && hum >	55)	{ LED_TempColor("green"); }
+	if (temp >	25 && temp	<= 27 && hum >= 60) { LED_TempColor("yellow"); }
+	if (temp >	27 && temp	<= 30 && hum >= 70) { LED_TempColor("orange"); }
+	if (temp >	30				  && hum >= 80) { LED_TempColor("red"); }
 }
 
 	//*******************************************************
@@ -142,30 +198,28 @@ void setup()
 	Serial.begin(9600);
 	Serial.println("Setup begin");
 
-	//neopixelobjekt(255);
+	neopixelobjekt(255);
 
 	Serial.println("Setup end");
 }
 
 	//*******************************************************
 	//************************ LOOP *************************
-	//*******************************************************
+	//*****************s**************************************
 void loop()
 {
 	// laufzeit_1 EIN, laufzeit_1 AUS - LED schalten in loop - Schaltzeiten in Millisekunden
-	//if (millis() - startzeit_1 >= laufzeit_1k) 
-	//{
-	//	startzeit_1 = millis();
-		motionCheck();
-		delay(500);
-	//}
-
-	/*if (millis() - startzeit_1 >= laufzeit_5k)
+	if (millis() - startzeit_1 >= laufzeit_20)
 	{
 		startzeit_1 = millis();
-		dhtCheck();
-	}*/
+		motionCheck();
+	}
 
-	//GasCheckCO(gasSensor2);
-	//GasCheckCO2(gasSensor)
+	if (millis() - startzeit_2 >= laufzeit_500)
+	{
+		startzeit_2 = millis();
+		//dhtSensor.getTempValueOnlyIfChanged();
+		//dhtSensor.getHumValueOnlyIfChanged();
+		dhtCheck();
+	}
 }

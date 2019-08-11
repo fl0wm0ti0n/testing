@@ -20,17 +20,19 @@ String previousColor;
 
 inline CRGB* neopixelobjekt(int brightness)
 {
+	Serial.println("Setup WS2812");
 	LEDS.setBrightness(brightness);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
 	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 	return ledsA;
 }
 
-void LED_WS2812(int onoff)
+inline void LED_WS2812(int onoff)
 {
 	switch (onoff)
 	{
 	case 1:
+		//Serial.println("WS on");
 		for (int i = 0;i < NUM_LEDS_1; i++)
 		{
 			ledsA[i] = CHSV(i*numstops + ihue, 255, 255);
@@ -42,6 +44,7 @@ void LED_WS2812(int onoff)
 		}
 		break;
 	default:
+		//Serial.println("WS off");
 		for (int i = 0;i < NUM_LEDS_1; i++)
 		{
 			ledsA[i] = CHSV(0, 0, 0);
@@ -356,7 +359,7 @@ inline void LED_TempColor(String color)
 		{
 			for (int i = fromblubb;i <= blubb; i++)
 			{
-				Serial.println("blubb++");
+				//Serial.println("blubb++");
 				//Serial.println(i);
 				for (int element = 0;element <= range; element++)
 				{
@@ -371,7 +374,7 @@ inline void LED_TempColor(String color)
 		{
 			for (int i = fromblubb;i >= blubb; i--)
 			{
-				Serial.println("blubb--");
+				//Serial.println("blubb--");
 				//Serial.println(i);
 				for (int element = 0;element <= range; element++)
 				{

@@ -21,8 +21,8 @@ class home_ain : public home_sensor
 		home_ain(String n, int p);			// Constructor
 		virtual ~home_ain();				// Destructor
 
-		int getValue();						// Method: get Touch Value
-		int setPin(int iPin);				// Method: set Touch Pin
+		int getValue();						// Method: get Value
+		int setPin(int iPin);				// Method: set Pin
 };
 
 #endif
