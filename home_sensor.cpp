@@ -7,7 +7,7 @@
 #include "home_sensor.h"
 #include "home_constants.h"
 
-home_sensor::home_sensor(tSensorType t, String n, int p)
+home_sensor::home_sensor(t_sensor_type t, String n, int p)
 	:m_iType(t), m_cName(n), m_iValue(0), m_iPin(p)
 {
 	pinMode(m_iPin, INPUT);

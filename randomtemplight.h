@@ -9,6 +9,7 @@
 
 #include "FastLED.h"
 #include "home_constants.h"
+#include "home_log.h"
 
 float ihue = 0;
 float istep = 0.01;

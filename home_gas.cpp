@@ -5,7 +5,7 @@
 #include "home_gas.h"
 
 home_gas::home_gas(String n, int p)
-	:home_sensor(tSensorType::analogIn_sens, n, p)
+	:home_sensor(t_sensor_type::analogIn_sens, n, p)
 {
 	home_sensor::getValue(analogRead(p));
 	setPin(p);

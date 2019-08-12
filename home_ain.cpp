@@ -5,7 +5,7 @@
 #include "home_ain.h"
 
 home_ain::home_ain(String n, int p)
-	:home_sensor(tSensorType::analogIn_sens, n, p)
+	:home_sensor(t_sensor_type::analogIn_sens, n, p)
 {
 	home_sensor::getValue(analogRead(p));
 	setPin(p);

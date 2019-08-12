@@ -17,6 +17,7 @@
 #include "randomtemplight.h"
 #include "neopixelobjekt.h"
 #include "home_gas.h"
+#include "home_log.h"
 
 //*******************************************************
 //********************* DECLARATION *********************
@@ -26,6 +27,7 @@ int lightcounter = 0;
 int lightdoggle = 0;
 int lightswitch = 1;
 
+home_log logging_one(DEFAULT_LOGLEVEL, DEFAULT_LOGTARGET, "Logging1");
 home_aout lightStripe("lightstripe 1", PIN_PWM_2);
 home_motion motionSensor("motionsensor 1", PIN_MOTION_1);
 home_dht dhtSensor("dhtsensor 1", PIN_HUM_1);
@@ -49,7 +51,6 @@ unsigned long startzeit_5 = 0;
 #define        laufzeit_1k5		1500UL
 #define        laufzeit_2k		2000UL
 #define        laufzeit_5k		5000UL
-
 
 void LichtKomplettSchalten_SobaldImpuls()
 {
@@ -171,14 +172,15 @@ void LichtAnSolangeInputImpulsAn_AusErlaubtNach255()
 
 void motionCheck()
 {
-	//ichtAnSolangeInputImpulsAn_AusErlaubtNach255();
+	//LichtAnSolangeInputImpulsAn_AusErlaubtNach255();
 	LichtAnSolangeInputImpulsAn();
 	//LichtKomplettSchalten_SobaldImpuls();
 }
 
 void dhtCheck()
 {
-	Serial.println("Checking DHT ...");
+	logging_one.writeLog("Checking DHT ...", debug);
+
 	float hum = dhtSensor.getHumValueOnlyIfChanged();
 	float temp = dhtSensor.getTempValueOnlyIfChanged();
 
@@ -195,12 +197,11 @@ void dhtCheck()
 	//*******************************************************
 void setup()
 {
-	Serial.begin(9600);
-	Serial.println("Setup begin");
+	logging_one.writeLog("Setup Begin", debug);
 
 	neopixelobjekt(255);
 
-	Serial.println("Setup end");
+	logging_one.writeLog("Setup End", debug);
 }
 
 	//*******************************************************
@@ -218,8 +219,6 @@ void loop()
 	if (millis() - startzeit_2 >= laufzeit_500)
 	{
 		startzeit_2 = millis();
-		//dhtSensor.getTempValueOnlyIfChanged();
-		//dhtSensor.getHumValueOnlyIfChanged();
 		dhtCheck();
 	}
 }

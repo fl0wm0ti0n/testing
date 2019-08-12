@@ -13,7 +13,7 @@
 	#include "WProgram.h"
 #endif
 
-enum tSensorType
+enum t_sensor_type
 {
 	undefined_sens = 0,
 	digitalIn_sens = 1,
@@ -27,32 +27,28 @@ enum tSensorType
 class home_sensor
 {
 public:
-	home_sensor(tSensorType t, String n, int p);
+	home_sensor(t_sensor_type t, String n, int p);
 	virtual ~home_sensor();
 
-	inline tSensorType getType()
+	t_sensor_type getType()
 	{return m_iType;}
 
-	inline String getName()
+	String getName()
 	{return m_cName;}
 
-	//inline int getValue()
+	//int getValue()
 	//{return m_iValue;}
 
-	inline int getPin()
+	int getPin()
 	{return m_iPin;}
 
 	virtual bool getValue(int v);
 
-protected:
-
 private:
-	tSensorType m_iType;
+	t_sensor_type m_iType;
 	String m_cName;
 	int m_iValue;
 	int m_iPin;
 };
 
 #endif
-
-

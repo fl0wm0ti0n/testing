@@ -7,7 +7,7 @@
 #include "home_actor.h"
 #include "home_constants.h"
 
-home_actor::home_actor(tActorType t, String n, int p)
+home_actor::home_actor(t_actor_type t, String n, int p)
 	:m_iType(t), m_cName(n), m_iValue(0), m_iPin(p)
 {
 	pinMode(m_iPin, OUTPUT);

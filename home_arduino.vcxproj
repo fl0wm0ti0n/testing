@@ -87,6 +87,7 @@
     <ClInclude Include="home_constants.h" />
     <ClInclude Include="home_dout.h" />
     <ClInclude Include="home_gas.h" />
+    <ClInclude Include="home_log.h" />
     <ClInclude Include="home_motion.h" />
     <ClInclude Include="home_sensor.h" />
     <ClInclude Include="home_touch.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="home_doggle.cpp" />
     <ClCompile Include="home_dout.cpp" />
     <ClCompile Include="home_gas.cpp" />
+    <ClCompile Include="home_log.cpp" />
     <ClCompile Include="home_motion.cpp" />
     <ClCompile Include="home_sensor.cpp" />
     <ClCompile Include="home_touch.cpp" />

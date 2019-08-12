@@ -6,7 +6,7 @@
 #include "home_dht.h"
 
 home_dht::home_dht(String n, int p)
-	:home_sensor(tSensorType::DHT_sens, n, p)
+	:home_sensor(t_sensor_type::DHT_sens, n, p)
 {
 	dht.begin();
 }

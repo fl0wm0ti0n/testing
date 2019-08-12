@@ -6,7 +6,7 @@
 #include "home_constants.h"
 
 home_motion::home_motion(String n, int p)
-	:home_sensor(tSensorType::digitalIn_sens, n, p)
+	:home_sensor(t_sensor_type::digitalIn_sens, n, p)
 {
 	home_sensor::getValue(digitalRead(p));
 

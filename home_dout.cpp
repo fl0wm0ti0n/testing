@@ -6,7 +6,7 @@
 #include "home_dout.h"
 
 home_dout::home_dout(String n, int p)
-	:home_actor(tActorType::digitalOut_act, n, p)
+	:home_actor(t_actor_type::digitalOut_act, n, p)
 {
 	home_actor::setValue(digitalRead(p));
 }

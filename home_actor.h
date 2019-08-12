@@ -13,7 +13,7 @@
 	#include "WProgram.h"
 #endif
 
-enum tActorType
+enum t_actor_type
 {
 	undefined_act = 0,
 	digitalOut_act = 1,
@@ -27,27 +27,25 @@ enum tActorType
 class home_actor
 {
  public:
-	 home_actor(tActorType t, String n, int p);
+	 home_actor(t_actor_type t, String n, int p);
 	 virtual ~home_actor();
 
-	 inline tActorType getType()
+	 t_actor_type getType()
 		{return m_iType;}
 	 
-	 inline String getName()
+	 String getName()
 		{return m_cName;}
 	 
-	 inline int getValue()
+	 int getValue()
 		{return m_iValue;}
 
-	 inline int getPin()
+	 int getPin()
 		{ return m_iPin;}
 	
 	 virtual bool setValue(int v);
 
- protected:
-
  private:
-	 tActorType m_iType;
+	 t_actor_type m_iType;
 	 String m_cName;
 	 int m_iValue;
 	 int m_iPin;

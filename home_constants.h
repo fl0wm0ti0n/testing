@@ -28,6 +28,10 @@
 #define	NUM_LEDS_1		60
 #define	NUM_LEDS_2		60
 
+//****** DEFAULT *********
+#define	DEFAULT_LOGLEVEL		error
+#define	DEFAULT_LOGTARGET		serial
+
 #endif
 
 
