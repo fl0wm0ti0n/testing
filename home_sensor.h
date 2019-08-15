@@ -13,6 +13,8 @@
 	#include "WProgram.h"
 #endif
 
+#include "home_log.h"
+
 enum t_sensor_type
 {
 	undefined_sens = 0,

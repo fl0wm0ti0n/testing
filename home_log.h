@@ -3,7 +3,6 @@
 // @date           08.2019
 // @brief          baseclass of logging
 
-
 #ifndef _HOME_LOG_h
 #define _HOME_LOG_h
 
@@ -12,6 +11,8 @@
 #else
 #include "WProgram.h"
 #endif
+
+#include <time.h>
 
 enum t_log_level
 {
@@ -33,29 +34,51 @@ class home_log
 {
 
 private:
-	String log_;
-	t_log_level m_iLogLvl_;
-	t_log_target m_iLogTarget_;
-	String m_cName_;
-	String logArchive_;
-	void handleLog(String text, t_log_level llevel);
+
+	// Variablen des Constructors
+	t_log_level		m_iLogLvl_;
+	t_log_target	m_iLogTarget_;
+	String			m_cName_;
+
+	// Variablen zur Zeitberechnung
+	String			sTimestamp;
+	String			sSekunde;
+	String			sMinute;
+	String			sStunde;
+	int				iSekunde = 0;
+	int				iMinute = 0;
+	int				iStunde = 0;
+
+	// Variablen zur Loghochzähulung
+	unsigned int	iNumErrors;
+	unsigned int	iNumWarnings;
+	unsigned int    iNumSensors;
+	unsigned int    iNumDebugs;
+	unsigned int    iNumExtremedebugs;
+
+	// Weitere Variablen
+	String			aEnumlvl[4];
+	String			sLogArchive_;
+	String			sLogmessage_;
+
+	void handleLog(String time, String text, t_log_level llevel);
 
 public:
 	home_log(t_log_level t, t_log_target g, String n);		// Constructor
 	virtual ~home_log();									// Destructor
 
 	void writeLog(String text, t_log_level llevel);
-	String getLogArchive(String text, t_log_level llevel);
+	String getActualTimestamp();
+	String getLogArchive(t_log_level llevel);
 
-
-	t_log_level setLoglevel(t_log_level llevel)
+	void setLoglevel(t_log_level m_iLogLvl_)
 	{
-		m_iLogLvl_ = llevel;
+		this->m_iLogLvl_ = m_iLogLvl_;
 	}
 
-	t_log_target setLogTarget(t_log_target ltarget)
+	void setLogTarget(t_log_target m_iLogTarget_)
 	{
-		m_iLogTarget_ = ltarget;
+		this->m_iLogTarget_ = m_iLogTarget_;
 	}
 
 	t_log_level getLogLevel()
@@ -73,5 +96,4 @@ public:
 		return m_cName_;
 	}
 };
-
 #endif

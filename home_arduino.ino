@@ -4,20 +4,15 @@
 // @brief          main routine
 
 #include <DHT.h>
-#include "home_sensor.h"
-#include "home_dout.h"
 #include "home_actor.h"
 #include "home_motion.h"
-#include "home_doggle.h"
 #include "home_constants.h"
-#include "home_touch.h"
 #include "home_aout.h"
 #include "home_dht.h"
-#include "home_ain.h"
 #include "randomtemplight.h"
-#include "neopixelobjekt.h"
 #include "home_gas.h"
 #include "home_log.h"
+#include "Streaming.h"
 
 //*******************************************************
 //********************* DECLARATION *********************
@@ -27,7 +22,7 @@ int lightcounter = 0;
 int lightdoggle = 0;
 int lightswitch = 1;
 
-home_log logging_one(DEFAULT_LOGLEVEL, DEFAULT_LOGTARGET, "Logging1");
+home_log logging_one(extremedebug, DEFAULT_LOGTARGET, "Logging1");
 home_aout lightStripe("lightstripe 1", PIN_PWM_2);
 home_motion motionSensor("motionsensor 1", PIN_MOTION_1);
 home_dht dhtSensor("dhtsensor 1", PIN_HUM_1);
@@ -42,31 +37,20 @@ unsigned long startzeit_3 = 0;
 unsigned long startzeit_4 = 0;
 unsigned long startzeit_5 = 0;
 
-// Definitionen der einzelnen Schaltzeiten
-#define        laufzeit_10		10UL
-#define        laufzeit_20		20UL
-#define        laufzeit_30		30UL
-#define        laufzeit_500		500UL
-#define        laufzeit_1k		1000UL
-#define        laufzeit_1k5		1500UL
-#define        laufzeit_2k		2000UL
-#define        laufzeit_5k		5000UL
-
 void LichtKomplettSchalten_SobaldImpuls()
 {
+	logging_one.writeLog("Funktionsaufruf - LichtKomplettSchalten_SobaldImpuls", extremedebug);
 	// Wenn Bewegung "light up" bis das Licht ganz an ist nach einer am Motionsensor eingestellten Zeit geht das licht wieder aus.
 
-	if (motionSensor.getValue(PIN_MOTION_1) == true)
+	if (motionSensor.getValue(PIN_MOTION_1, logging_one) == true)
 	{
 		if (lightStripe.getValue() != 255)
 		{
-			Serial.println("On");
-			Serial.println(lightStripe.getValue());
-
 			for (int i = 0; i <= 255; ++i)
 			{
 				lightStripe.setValue(i);
-				delay(20);
+				delay(DEFAULT_LIGHTFDELAY);
+				logging_one.writeLog("Licht an - " + String(lightStripe.getValue()), debug);
 			}
 			lightStripe.setValue(255);
 		}
@@ -75,12 +59,12 @@ void LichtKomplettSchalten_SobaldImpuls()
 	{
 		if (lightStripe.getValue() != 0)
 		{
-			Serial.println("Off");
-			Serial.println(lightStripe.getValue());
+
 			for (int j = 255; j >= 0; --j)
 			{
 				lightStripe.setValue(j);
-				delay(20);
+				delay(DEFAULT_LIGHTFDELAY);
+				logging_one.writeLog("Licht aus - " + String(lightStripe.getValue()), debug);
 			}
 			lightStripe.setValue(0);
 		}
@@ -93,17 +77,20 @@ void LichtAnSolangeInputImpulsAn()
 	// Impuls effect
 	// Mit Motionsensor justierbar
 
-	if (motionSensor.getValue(PIN_MOTION_1) == true)
+	String lightvalue;
+
+	logging_one.writeLog("Call - LichtAnSolangeInputImpulsAn", extremedebug);
+
+	if (motionSensor.getValue(PIN_MOTION_1, logging_one) == true)
 	{
 		if (lightStripe.getValue() != 255)
 		{
-			Serial.println("On");
-			Serial.println(lightStripe.getValue());
 			if (lightStripe.getValue() <= 255)
 			{
-				Serial.println(lightcounter);
 				lightcounter++;
 				lightStripe.setValue(lightcounter);
+				lightvalue = String(lightStripe.getValue());
+				logging_one.writeLog("Licht an - " + lightvalue, debug);
 			}
 		}
 	}
@@ -111,13 +98,12 @@ void LichtAnSolangeInputImpulsAn()
 	{
 		if (lightStripe.getValue() != 0)
 		{
-			Serial.println("Off");
-			Serial.println(lightStripe.getValue());
 			if (lightStripe.getValue() >= 0)
 			{
 				lightcounter--;
-				Serial.println(lightcounter);
 				lightStripe.setValue(lightcounter);
+				lightvalue = String(lightStripe.getValue());
+				logging_one.writeLog("Licht aus - " + lightvalue, debug);
 			}
 		}
 	}
@@ -125,24 +111,25 @@ void LichtAnSolangeInputImpulsAn()
 
 void LichtAnSolangeInputImpulsAn_AusErlaubtNach255()
 {
+	logging_one.writeLog("Funktionsaufruf - LichtAnSolangeInputImpulsAn_AusErlaubtNach255", extremedebug);
 	// Wenn Bewegung "light up" bis volle Stärke - erst danach "light off"
 	// NICHT mit Motionsensor justierbar
 	
 		if (lightStripe.getValue() != 255 && lightdoggle == 0)
 		{
-			if (lightStripe.getValue() <= 255 && motionSensor.getValue(PIN_MOTION_1) == true)
+			if (lightStripe.getValue() <= 255 && motionSensor.getValue(PIN_MOTION_1, logging_one) == true)
 			{
-				/*Serial.print("On1 = ");
-				Serial.println(lightcounter);*/
+				logging_one.writeLog(&"Licht an - "[lightcounter], debug);
+
 				lightcounter++;
 				lightStripe.setValue(lightcounter);
 				lightdoggle = 0;
 				lightswitch = 0;
 			}
-			else if (lightcounter <= 255 && motionSensor.getValue(PIN_MOTION_1) == false)
+			else if (lightcounter <= 255 && motionSensor.getValue(PIN_MOTION_1, logging_one) == false)
 			{
-				/*Serial.print("On2 = ");
-				Serial.println(lightcounter);*/
+				logging_one.writeLog(&"Licht an - "[lightcounter], debug);
+
 				lightStripe.setValue(lightcounter);
 				if (lightswitch == 0) { lightcounter++;}
 			}
@@ -152,12 +139,12 @@ void LichtAnSolangeInputImpulsAn_AusErlaubtNach255()
 			lightdoggle = 1;
 		}
 
-		if (lightStripe.getValue() != 0 && lightdoggle == 1 && motionSensor.getValue(PIN_MOTION_1) == false)
+		if (lightStripe.getValue() != 0 && lightdoggle == 1 && motionSensor.getValue(PIN_MOTION_1, logging_one) == false)
 		{
 			if (lightStripe.getValue() > 0)
 			{
-				/*Serial.print("Off = ");
-				Serial.println(lightcounter);*/
+				logging_one.writeLog(&"Licht aus - "[lightcounter], debug);
+
 				lightcounter--;
 				lightStripe.setValue(lightcounter);
 				lightdoggle = 1;
@@ -172,6 +159,7 @@ void LichtAnSolangeInputImpulsAn_AusErlaubtNach255()
 
 void motionCheck()
 {
+	logging_one.writeLog("Call - motionCheck", extremedebug);
 	//LichtAnSolangeInputImpulsAn_AusErlaubtNach255();
 	LichtAnSolangeInputImpulsAn();
 	//LichtKomplettSchalten_SobaldImpuls();
@@ -179,17 +167,16 @@ void motionCheck()
 
 void dhtCheck()
 {
-	logging_one.writeLog("Checking DHT ...", debug);
+	logging_one.writeLog("Call - dhtCheck", extremedebug);
+	float hum = dhtSensor.getHumValueOnlyIfChanged(logging_one);
+	float temp = dhtSensor.getTempValueOnlyIfChanged(logging_one);
 
-	float hum = dhtSensor.getHumValueOnlyIfChanged();
-	float temp = dhtSensor.getTempValueOnlyIfChanged();
-
-	if (			  temp	<= 20 && hum <= 50)	{ LED_TempColor("arctic"); }
-	if (temp >	20 && temp	<= 23 && hum <= 50) { LED_TempColor("blue"); }
-	if (temp >	23 && temp	<= 25 && hum >	55)	{ LED_TempColor("green"); }
-	if (temp >	25 && temp	<= 27 && hum >= 60) { LED_TempColor("yellow"); }
-	if (temp >	27 && temp	<= 30 && hum >= 70) { LED_TempColor("orange"); }
-	if (temp >	30				  && hum >= 80) { LED_TempColor("red"); }
+	if (			  temp	<= 20 && hum <= 50)	{ LED_TempColor("arctic");	logging_one.writeLog("Set color 'arctic'", debug); }
+	if (temp >	20 && temp	<= 23 && hum <= 50) { LED_TempColor("blue");	logging_one.writeLog("Set color 'blue'", debug); }
+	if (temp >	23 && temp	<= 25 && hum >	55)	{ LED_TempColor("green");	logging_one.writeLog("Set color 'green'", debug); }
+	if (temp >	25 && temp	<= 27 && hum >= 60) { LED_TempColor("yellow");  logging_one.writeLog("Set color 'yellow'", debug); }
+	if (temp >	27 && temp	<= 30 && hum >= 70) { LED_TempColor("orange");  logging_one.writeLog("Set color 'orange'", debug); }
+	if (temp >	30				  && hum >= 80) { LED_TempColor("red");		logging_one.writeLog("Set color 'red'", debug); }
 }
 
 	//*******************************************************
@@ -198,17 +185,38 @@ void dhtCheck()
 void setup()
 {
 	logging_one.writeLog("Setup Begin", debug);
-
 	neopixelobjekt(255);
-
 	logging_one.writeLog("Setup End", debug);
 }
 
 	//*******************************************************
 	//************************ LOOP *************************
-	//*****************s**************************************
+	//*******************************************************
 void loop()
 {
+
+	/*if (millis() - startzeit_3 >= laufzeit_1k)
+	{
+
+		sClock = millis() / 1000;
+
+		if (sClock + 1 >= sClockOld);
+		{
+			sekunde++;
+			sClockOld = sClock;
+			if (sekunde = 60)
+			{
+				minute++;
+				sekunde = 0;
+				if (minute = 60)
+				{
+					stunde++;
+					minute = 0;
+				}
+			}
+		}
+	}*/
+
 	// laufzeit_1 EIN, laufzeit_1 AUS - LED schalten in loop - Schaltzeiten in Millisekunden
 	if (millis() - startzeit_1 >= laufzeit_20)
 	{
@@ -218,6 +226,7 @@ void loop()
 
 	if (millis() - startzeit_2 >= laufzeit_500)
 	{
+
 		startzeit_2 = millis();
 		dhtCheck();
 	}

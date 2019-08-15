@@ -29,9 +29,19 @@
 #define	NUM_LEDS_2		60
 
 //****** DEFAULT *********
-#define	DEFAULT_LOGLEVEL		error
+#define	DEFAULT_LOGLEVEL		debug
 #define	DEFAULT_LOGTARGET		serial
+#define	DEFAULT_LIGHTFDELAY		20
+
+
+// Definitionen der einzelnen Schaltzeiten
+#define        laufzeit_10		10UL
+#define        laufzeit_20		20UL
+#define        laufzeit_30		30UL
+#define        laufzeit_500		500UL
+#define        laufzeit_1k		1000UL
+#define        laufzeit_1k5		1500UL
+#define        laufzeit_2k		2000UL
+#define        laufzeit_5k		5000UL
 
 #endif
-
-

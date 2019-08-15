@@ -13,20 +13,16 @@ home_motion::home_motion(String n, int p)
 }
 
 home_motion::~home_motion()
-{
+= default;
 
-
-}
-
-bool home_motion::getValue(int v)
+bool home_motion::getValue(int v, home_log &logging_one)
 {
 	home_sensor::getValue(getPin());
 	if (digitalRead(getPin()) == LOW && iMotionState != 0)
 	{
 		iMotionState = 0;
 		iMotionValue = false;
-		Serial.println("keine bewegung erkannt");
-
+		logging_one.writeLog("motion dedected", debug);
 	}
 	if (digitalRead(getPin()) == HIGH && iMotionState != 1)
 	{

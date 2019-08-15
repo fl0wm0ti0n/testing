@@ -7,8 +7,6 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <wiringPiI2C.h>
-#include <wiringPi.h>
 
 /*@param iOption: Sensor-Resolution Option
  *@param cAddress: i2c-Address from the Sensor (0x29, 0x39, 0x49)

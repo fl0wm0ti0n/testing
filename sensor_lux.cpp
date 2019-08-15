@@ -6,12 +6,9 @@
  */
 
 #include <stdlib.h>
-#include <wiringPiI2C.h>
-#include <wiringPi.h>
-#include <wiringPi.h>
 #include "sensor_lux.h"
 #include <math.h>
-#include <library/logger.h>
+
 
 using namespace std;
 

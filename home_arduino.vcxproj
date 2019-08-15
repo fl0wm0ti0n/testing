@@ -93,6 +93,7 @@
     <ClInclude Include="home_touch.h" />
     <ClInclude Include="neopixelobjekt.h" />
     <ClInclude Include="randomtemplight.h" />
+    <ClInclude Include="Streaming.h" />
     <ClInclude Include="__vm\.home_arduino.vsarduino.h" />
     <ClInclude Include="__vm\.testing.vsarduino.h" />
   </ItemGroup>

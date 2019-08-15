@@ -10,6 +10,7 @@
 #endif
 
 #include "home_sensor.h"
+#include "home_log.h"
 
 class home_motion :public home_sensor
 {
@@ -18,7 +19,7 @@ public:
 	home_motion(String n, int p);		// Constructor
 	virtual ~home_motion();				// Destructor
 
-	virtual bool getValue(int v);		// Method: get motion Value
+	virtual bool getValue(int v, home_log &logging_one);		// Method: get motion Value
 	int iMotionState = 0;
 	bool iMotionValue = false;
 };
