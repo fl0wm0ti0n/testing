@@ -9,9 +9,9 @@
 #include "WProgram.h"
 #endif
 
-#include "home_sensor.h"
+#include "sensor.h"
 
-class home_gas : public home_sensor
+class gasSensor : public sensor
 {
 private:
 	int iAnalogValue;
@@ -36,8 +36,8 @@ private:
 
 
 public:
-	home_gas(String n, int p);			// Constructor
-	virtual ~home_gas();				// Destructor
+	gasSensor(String n, int p);			// Constructor
+	virtual ~gasSensor();				// Destructor
 
 	int getRawValue();					// Method: get Value
 	int setPin(int iPin);				// Method: set Pin

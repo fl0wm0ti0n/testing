@@ -1,5 +1,5 @@
 
-// @file           home_doggle.h
+// @file           doggle.h
 // @author         flow@p0cki.at
 // @date           12.2016
 // @brief          flip a Value
@@ -13,7 +13,7 @@
 	#include "WProgram.h"
 #endif
 
-class home_doggle
+class doggle
 {
 private:
 	static int iflip;
@@ -21,8 +21,8 @@ private:
 	bool iReturnValue;
 
 public:
-	home_doggle();						// Constructor
-	virtual ~home_doggle();				// Destructor
+	doggle();						// Constructor
+	virtual ~doggle();				// Destructor
 
 	int flip(int iValue);				// Method: get on or off					
 };

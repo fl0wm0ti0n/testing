@@ -24,11 +24,11 @@ enum t_actor_type
 	RGB_act = 6
 };
 
-class home_actor
+class actor
 {
  public:
-	 home_actor(t_actor_type t, String n, int p);
-	 virtual ~home_actor();
+	 actor(t_actor_type t, String n, int p);
+	 virtual ~actor();
 
 	 t_actor_type getType()
 		{return m_iType;}

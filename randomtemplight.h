@@ -7,9 +7,10 @@
 #include "WProgram.h"
 #endif
 
+// ACHTUNG: Alle Arduino Bibliotheken welche in anderen Klassen verwerdnet werden müssen zumindest zusätzlich auch hier inlcludet werden. Obwohl diese hier ausgegraut werden.
 #include "FastLED.h"
-#include "home_constants.h"
-#include "home_log.h"
+#include "constants.h"
+#include "logger.h"
 
 float ihue = 0;
 float istep = 0.01;
@@ -19,16 +20,16 @@ int numstops = round(255 / NUM_LEDS_1);
 CRGB ledsA[NUM_LEDS_1];
 String previousColor;
 
-inline CRGB* neopixelobjekt(int brightness)
+inline CRGB* neopixelobjekt(int brightness, logger &logging_one)
 {
-	Serial.println("Setup WS2812");
+	logging_one.writeLog("Setup WS2812B...", extremedebug);
 	LEDS.setBrightness(brightness);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
 	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 	return ledsA;
 }
 
-inline void LED_WS2812(int onoff)
+inline void rainbow_effect(int onoff)
 {
 	switch (onoff)
 	{

@@ -2,31 +2,31 @@
 // 
 // 
 
-#include "home_gas.h"
+#include "gasSensor.h"
 
-home_gas::home_gas(String n, int p)
-	:home_sensor(t_sensor_type::analogIn_sens, n, p)
+gasSensor::gasSensor(String n, int p)
+	:sensor(t_sensor_type::analogIn_sens, n, p)
 {
-	home_sensor::getValue(analogRead(p));
+	sensor::getValue(analogRead(p));
 	setPin(p);
 }
 
-home_gas::~home_gas()
+gasSensor::~gasSensor()
 = default;
 
-int home_gas::setPin(int iPin)
+int gasSensor::setPin(int iPin)
 {
 	iPinNum = iPin;
 	pinMode(iPinNum, INPUT);
 }
 
-int home_gas::getRawValue()
+int gasSensor::getRawValue()
 {
 	iAnalogValue = analogRead(iPinNum);
 	return iAnalogValue;
 }
 
-float home_gas::getCO2Value()
+float gasSensor::getCO2Value()
 {
 	sensorValue = getRawValue();
 	sensorResistance = (1023. / (float)sensorValue * 5. - 1.)*RLOAD;
@@ -35,7 +35,7 @@ float home_gas::getCO2Value()
 	return value;
 }
 
-float home_gas::getCOValue()
+float gasSensor::getCOValue()
 {
 	sensorValue = getRawValue();
 

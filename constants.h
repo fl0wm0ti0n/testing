@@ -32,6 +32,7 @@
 #define	DEFAULT_LOGLEVEL		debug
 #define	DEFAULT_LOGTARGET		serial
 #define	DEFAULT_LIGHTFDELAY		20
+#define DEFAULT_THRESHOLD		0.5
 
 
 // Definitionen der einzelnen Schaltzeiten

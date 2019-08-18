@@ -1,4 +1,4 @@
-// home_ain.h
+// analogIn.h
 
 #ifndef _HOME_AIN_h
 #define _HOME_AIN_h
@@ -9,17 +9,17 @@
 	#include "WProgram.h"
 #endif
 
-#include "home_sensor.h"
+#include "sensor.h"
 
-class home_ain : public home_sensor
+class analogIn : public sensor
 {
 	private:
 		int iAnalogValue;
 		int	iPinNum;
 
 	public:
-		home_ain(String n, int p);			// Constructor
-		virtual ~home_ain();				// Destructor
+		analogIn(String n, int p);			// Constructor
+		virtual ~analogIn();				// Destructor
 
 		int getValue();						// Method: get Value
 		int setPin(int iPin);				// Method: set Pin

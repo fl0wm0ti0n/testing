@@ -1,8 +1,7 @@
-
-// @file           home_sensor.h
-// @author         flow@p0cki.at
-// @date           01.2017
-// @brief          baseclass of all sensors
+// @file      sensor.h
+// @author    flow@p0cki.net
+// @date      01.2017
+// @brief     baseclass of all sensors
 
 #ifndef _HOME_SENSOR_h
 #define _HOME_SENSOR_h
@@ -13,7 +12,7 @@
 	#include "WProgram.h"
 #endif
 
-#include "home_log.h"
+#include "logger.h"
 
 enum t_sensor_type
 {
@@ -26,11 +25,18 @@ enum t_sensor_type
 
 };
 
-class home_sensor
+class sensor
 {
+
+private:
+	t_sensor_type m_iType;
+	String m_cName;
+	int m_iValue;
+	int m_iPin;
+
 public:
-	home_sensor(t_sensor_type t, String n, int p);
-	virtual ~home_sensor();
+	sensor(t_sensor_type t, String n, int p);
+	virtual ~sensor();
 
 	t_sensor_type getType()
 	{return m_iType;}
@@ -41,16 +47,17 @@ public:
 	//int getValue()
 	//{return m_iValue;}
 
+	int setPin(int p)
+	{
+		m_iPin = p;
+		pinMode(m_iPin, INPUT);
+		return true;
+	}
+
 	int getPin()
 	{return m_iPin;}
 
 	virtual bool getValue(int v);
-
-private:
-	t_sensor_type m_iType;
-	String m_cName;
-	int m_iValue;
-	int m_iPin;
 };
 
 #endif

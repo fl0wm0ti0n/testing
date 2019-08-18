@@ -9,14 +9,14 @@
 #include "WProgram.h"
 #endif
 
-#include "home_actor.h"
+#include "actor.h"
 
-class home_aout :public home_actor
+class analogOut :public actor
 {
 
 public:
-	home_aout(String n, int p);
-	virtual ~home_aout();
+	analogOut(String n, int p);
+	virtual ~analogOut();
 
 	virtual bool setValue(int v);
 

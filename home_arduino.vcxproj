@@ -47,7 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\testing;$(ProjectDir)..\..\..\Arduino\libraries\DHT_sensor_library;$(ProjectDir)..\..\..\Arduino\libraries\FastLED;$(ProjectDir)..\..\..\Arduino\libraries\Adafruit_Unified_Sensor;C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\testing;$(ProjectDir)..\..\..\Arduino\libraries\FastLED;$(ProjectDir)..\..\..\Arduino\libraries\DHT_sensor_library;$(ProjectDir)..\..\..\Arduino\libraries\Adafruit_Unified_Sensor;C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.testing.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_atmega328p__;__AVR_ATmega328P__;__AVR_ATmega328p__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=106011;ARDUINO_AVR_NANO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -79,18 +79,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="home_dht.h" />
-    <ClInclude Include="home_actor.h" />
-    <ClInclude Include="home_ain.h" />
-    <ClInclude Include="home_aout.h" />
-    <ClInclude Include="home_doggle.h" />
-    <ClInclude Include="home_constants.h" />
-    <ClInclude Include="home_dout.h" />
-    <ClInclude Include="home_gas.h" />
-    <ClInclude Include="home_log.h" />
-    <ClInclude Include="home_motion.h" />
-    <ClInclude Include="home_sensor.h" />
-    <ClInclude Include="home_touch.h" />
+    <ClInclude Include="dhtSensor.h" />
+    <ClInclude Include="actor.h" />
+    <ClInclude Include="analogIn.h" />
+    <ClInclude Include="analogOut.h" />
+    <ClInclude Include="doggle.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="digitalOut.h" />
+    <ClInclude Include="gasSensor.h" />
+    <ClInclude Include="logger.h" />
+    <ClInclude Include="motionSensor.h" />
+    <ClInclude Include="sensor.h" />
+    <ClInclude Include="touchSensor.h" />
     <ClInclude Include="neopixelobjekt.h" />
     <ClInclude Include="randomtemplight.h" />
     <ClInclude Include="Streaming.h" />
@@ -98,17 +98,17 @@
     <ClInclude Include="__vm\.testing.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="home_dht.cpp" />
-    <ClCompile Include="home_actor.cpp" />
-    <ClCompile Include="home_ain.cpp" />
-    <ClCompile Include="home_aout.cpp" />
-    <ClCompile Include="home_doggle.cpp" />
-    <ClCompile Include="home_dout.cpp" />
-    <ClCompile Include="home_gas.cpp" />
-    <ClCompile Include="home_log.cpp" />
-    <ClCompile Include="home_motion.cpp" />
-    <ClCompile Include="home_sensor.cpp" />
-    <ClCompile Include="home_touch.cpp" />
+    <ClCompile Include="dhtSensor.cpp" />
+    <ClCompile Include="actor.cpp" />
+    <ClCompile Include="analogIn.cpp" />
+    <ClCompile Include="analogOut.cpp" />
+    <ClCompile Include="doggle.cpp" />
+    <ClCompile Include="digitalOut.cpp" />
+    <ClCompile Include="gasSensor.cpp" />
+    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="motionSensor.cpp" />
+    <ClCompile Include="sensor.cpp" />
+    <ClCompile Include="TouchSensor.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>

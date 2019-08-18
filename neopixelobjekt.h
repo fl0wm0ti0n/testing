@@ -8,7 +8,7 @@
 #endif
 
 #include "FastLED.h"
-#include "home_constants.h"
+#include "constants.h"
 
 /*inline CRGB* neopixelobjekt(int brightness)
 {

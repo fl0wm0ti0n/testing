@@ -1,4 +1,4 @@
-// home_dout.h
+// digitalOut.h
 
 #ifndef _HOME_DOUT_h
 #define _HOME_DOUT_h
@@ -9,14 +9,14 @@
 	#include "WProgram.h"
 #endif
 
-#include "home_actor.h"
+#include "actor.h"
 
-class home_dout:public home_actor
+class digitalOut:public actor
 {
 
 public:
-	 home_dout(String n, int p);
-	 virtual ~home_dout();
+	 digitalOut(String n, int p);
+	 virtual ~digitalOut();
 
 	 virtual bool setValue(int v);
 

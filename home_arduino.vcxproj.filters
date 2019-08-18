@@ -33,53 +33,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="home_arduino.ino" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="__vm\.home_arduino.vsarduino.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="home_actor.h">
-      <Filter>Header Files\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_dout.h">
-      <Filter>Header Files\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_motion.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_touch.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_constants.h">
-      <Filter>Header Files\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="home_doggle.h">
-      <Filter>Header Files\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="home_sensor.h">
-      <Filter>Header Files\sensors</Filter>
     </ClInclude>
     <ClInclude Include="__vm\.testing.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="home_aout.h">
-      <Filter>Header Files\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_ain.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_dht.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
     <ClInclude Include="neopixelobjekt.h">
       <Filter>Header Files\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_gas.h">
-      <Filter>Header Files\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="home_log.h">
-      <Filter>Header Files\misc</Filter>
     </ClInclude>
     <ClInclude Include="randomtemplight.h">
       <Filter>Header Files\misc</Filter>
@@ -87,40 +48,79 @@
     <ClInclude Include="Streaming.h">
       <Filter>Header Files\misc</Filter>
     </ClInclude>
+    <ClInclude Include="actor.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="analogOut.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="digitalOut.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="doggle.h">
+      <Filter>Header Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.h">
+      <Filter>Header Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="analogIn.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="dhtSensor.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="gasSensor.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="motionSensor.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="sensor.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Header Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="touchSensor.h">
+      <Filter>Header Files\sensors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="home_actor.cpp">
+    <ClCompile Include="actor.cpp">
       <Filter>Source Files\actors</Filter>
     </ClCompile>
-    <ClCompile Include="home_dout.cpp">
+    <ClCompile Include="analogOut.cpp">
       <Filter>Source Files\actors</Filter>
     </ClCompile>
-    <ClCompile Include="home_motion.cpp">
-      <Filter>Source Files\sensors</Filter>
+    <ClCompile Include="digitalOut.cpp">
+      <Filter>Source Files\actors</Filter>
     </ClCompile>
-    <ClCompile Include="home_touch.cpp">
-      <Filter>Source Files\sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_doggle.cpp">
+    <ClCompile Include="doggle.cpp">
       <Filter>Source Files\misc</Filter>
     </ClCompile>
-    <ClCompile Include="home_sensor.cpp">
-      <Filter>Source Files\sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_aout.cpp">
-      <Filter>Source Files\actors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_ain.cpp">
-      <Filter>Source Files\sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_dht.cpp">
-      <Filter>Source Files\sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_gas.cpp">
-      <Filter>Source Files\sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="home_log.cpp">
+    <ClCompile Include="logger.cpp">
       <Filter>Source Files\misc</Filter>
     </ClCompile>
+    <ClCompile Include="analogIn.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="dhtSensor.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="gasSensor.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="motionSensor.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="sensor.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="TouchSensor.cpp">
+      <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="home_arduino.ino" />
   </ItemGroup>
 </Project>

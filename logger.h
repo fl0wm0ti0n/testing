@@ -1,4 +1,4 @@
-// @file           home_log.h
+// @file           logger.h
 // @author         flow@p0cki.at
 // @date           08.2019
 // @brief          baseclass of logging
@@ -12,10 +12,9 @@
 #include "WProgram.h"
 #endif
 
-#include <time.h>
-
 enum t_log_level
 {
+	disabled = -1,
 	error = 0,
 	warning = 1,
 	sensordata = 2,
@@ -30,7 +29,7 @@ enum t_log_target
 	archive = 2,
 };
 
-class home_log
+class logger
 {
 
 private:
@@ -57,15 +56,15 @@ private:
 	unsigned int    iNumExtremedebugs;
 
 	// Weitere Variablen
-	String			aEnumlvl[4];
+	String			aEnumlvl[5];
 	String			sLogArchive_;
 	String			sLogmessage_;
 
 	void handleLog(String time, String text, t_log_level llevel);
 
 public:
-	home_log(t_log_level t, t_log_target g, String n);		// Constructor
-	virtual ~home_log();									// Destructor
+	logger(t_log_level t, t_log_target g, String n);		// Constructor
+	virtual ~logger();									// Destructor
 
 	void writeLog(String text, t_log_level llevel);
 	String getActualTimestamp();

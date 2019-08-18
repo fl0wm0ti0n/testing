@@ -3,33 +3,33 @@
 // 
 
 #include "DHT.h"
-#include "home_dht.h"
-#include "home_log.h"
+#include "dhtSensor.h"
+#include "logger.h"
 
-home_dht::home_dht(String n, int p)
-	:home_sensor(t_sensor_type::DHT_sens, n, p)
+dhtSensor::dhtSensor(String n, int p)
+	:sensor(t_sensor_type::DHT_sens, n, p)
 {
 	dht.begin();
 }
 
-home_dht::~home_dht()
+dhtSensor::~dhtSensor()
 = default;
 
-float home_dht::getTempValue(home_log &logging_one)
+float dhtSensor::getTempValue(logger &logging_one)
 {
 	temp = dht.readTemperature();
 	logging_one.writeLog("Die Temperatur betr\u00e4gt " + String(temp) + "C", sensordata);
 	return temp;
 }
 
-float home_dht::getHumValue(home_log &logging_one)
+float dhtSensor::getHumValue(logger &logging_one)
 {
 	hum = dht.readHumidity();
 	logging_one.writeLog("Die Luftfeuchtigkeit betr\u00e4gt " + String(hum) + "%", sensordata);
 	return hum;
 }
 
-float home_dht::getTempValueOnlyIfChanged(home_log &logging_one)
+float dhtSensor::getTempValueOnlyIfChanged(logger &logging_one)
 {
 	temp = dht.readTemperature();
 	if (temp != savetemp)
@@ -40,7 +40,7 @@ float home_dht::getTempValueOnlyIfChanged(home_log &logging_one)
 	return temp;
 }
 
-float home_dht::getHumValueOnlyIfChanged(home_log &logging_one)
+float dhtSensor::getHumValueOnlyIfChanged(logger &logging_one)
 {
 	hum = dht.readHumidity();
 	if (hum != savehum)
