@@ -3,7 +3,6 @@
 // @date      01.2017
 // @brief     childclass sensor
 
-
 #include "motionSensor.h"
 #include "constants.h"
 
@@ -19,7 +18,8 @@ motionSensor::~motionSensor()
 bool motionSensor::getValue(logger &logging_one)
 {
 	logging_one.writeLog("Call - motion - getValue", extremedebug);
-	if (digitalRead(getPin()) == HIGH)
+	
+	/*if (digitalRead(getPin()) == HIGH)
 	{
 		logging_one.writeLog("Motion: is true", sensordata);
 		iMotionValue = true;
@@ -28,21 +28,20 @@ bool motionSensor::getValue(logger &logging_one)
 	{
 		logging_one.writeLog("Motion: is false", sensordata);
 		iMotionValue = false;
-	}
+	}*/
 
-/*
 if (digitalRead(getPin()) == LOW && iMotionState != 0)
 {
 	iMotionState = 0;
 	iMotionValue = false;
-	Logging_one.writeLog("motion dedected...", sensordata);
+	logging_one.writeLog("Motion: is true", sensordata);
 }
 
 if (digitalRead(getPin()) == HIGH && iMotionState != 1)
 {
 	iMotionState = 1;
 	iMotionValue = true;
-	Logging_one.writeLog("there is no motion...", sensordata);
-}*/
+	logging_one.writeLog("Motion: is false", sensordata);
+}
 		return iMotionValue;
 }

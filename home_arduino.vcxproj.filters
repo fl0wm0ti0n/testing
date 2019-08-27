@@ -31,6 +31,12 @@
     <Filter Include="Source Files\misc">
       <UniqueIdentifier>{fb0291db-a479-4197-9b80-386a45ac4891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\main">
+      <UniqueIdentifier>{66c28e35-f95a-453d-82e9-956fef7efd9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{d295a7ac-788f-4100-92c2-a5a0e7712be9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.home_arduino.vsarduino.h">
@@ -60,9 +66,6 @@
     <ClInclude Include="doggle.h">
       <Filter>Header Files\misc</Filter>
     </ClInclude>
-    <ClInclude Include="logger.h">
-      <Filter>Header Files\misc</Filter>
-    </ClInclude>
     <ClInclude Include="analogIn.h">
       <Filter>Header Files\sensors</Filter>
     </ClInclude>
@@ -78,11 +81,17 @@
     <ClInclude Include="sensor.h">
       <Filter>Header Files\sensors</Filter>
     </ClInclude>
-    <ClInclude Include="constants.h">
-      <Filter>Header Files\misc</Filter>
-    </ClInclude>
     <ClInclude Include="touchSensor.h">
       <Filter>Header Files\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Header Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.h">
+      <Filter>Header Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="decisions.h">
+      <Filter>Header Files\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +105,6 @@
       <Filter>Source Files\actors</Filter>
     </ClCompile>
     <ClCompile Include="doggle.cpp">
-      <Filter>Source Files\misc</Filter>
-    </ClCompile>
-    <ClCompile Include="logger.cpp">
       <Filter>Source Files\misc</Filter>
     </ClCompile>
     <ClCompile Include="analogIn.cpp">
@@ -118,6 +124,12 @@
     </ClCompile>
     <ClCompile Include="TouchSensor.cpp">
       <Filter>Source Files\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="logger.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="decisions.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

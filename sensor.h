@@ -22,7 +22,6 @@ enum t_sensor_type
 	I2C_sens = 3,
 	DHT_sens = 4,
 	gas_sens = 5
-
 };
 
 class sensor
@@ -44,9 +43,6 @@ public:
 	String getName()
 	{return m_cName;}
 
-	//int getValue()
-	//{return m_iValue;}
-
 	int setPin(int p)
 	{
 		m_iPin = p;
@@ -59,5 +55,4 @@ public:
 
 	virtual bool getValue(int v);
 };
-
 #endif

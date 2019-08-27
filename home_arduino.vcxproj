@@ -79,6 +79,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="decisions.h" />
     <ClInclude Include="dhtSensor.h" />
     <ClInclude Include="actor.h" />
     <ClInclude Include="analogIn.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="__vm\.testing.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="decisions.cpp" />
     <ClCompile Include="dhtSensor.cpp" />
     <ClCompile Include="actor.cpp" />
     <ClCompile Include="analogIn.cpp" />

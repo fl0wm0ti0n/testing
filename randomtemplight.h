@@ -18,18 +18,45 @@ int idelay = 0;
 int bright = 1;
 int numstops = round(255 / NUM_LEDS_1);
 CRGB ledsA[NUM_LEDS_1];
-String previousColor;
+HSVHue previousColor;
 
 inline CRGB* neopixelobjekt(int brightness, logger &logging_one)
 {
-	logging_one.writeLog("Setup WS2812B...", extremedebug);
+	logging_one.writeLog("Setup WS2812B...", debug);
 	LEDS.setBrightness(brightness);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
 	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 	return ledsA;
 }
 
-inline void rainbow_effect(int onoff)
+inline void colorshift(int onoff, logger &Logging_one)
+{
+	switch (onoff)
+	{
+	case 1:
+
+		for (int i = 0;i < NUM_LEDS_1; i++)
+		{
+			ledsA[i] = CHSV(i*numstops + ihue, 255, 255);
+			ihue += istep;
+			if (ihue >= 255)
+			{
+				ihue = 0;
+			}
+		}
+		break;
+	default:
+		for (int i = 0;i < NUM_LEDS_1; i++)
+		{
+			ledsA[i] = CHSV(0, 0, 0);
+		}
+		break;
+	}
+	LEDS.show();
+	delay(idelay);
+}
+
+inline void rainbow_effect(int onoff, logger &Logging_one)
 {
 	switch (onoff)
 	{
@@ -57,7 +84,7 @@ inline void rainbow_effect(int onoff)
 	delay(idelay);
 }
 
-inline void LED_TempColor2(String color)
+inline void LED_TempColor2(String color, logger &Logging_one)
 {
 	int rnd[NUM_LEDS_1];
 	int rndbright[NUM_LEDS_1];
@@ -176,7 +203,7 @@ inline void LED_TempColor2(String color)
 	}
 }
 
-inline void LED_TempColor3(String color)
+inline void LED_TempColor3(String color, logger &Logging_one)
 {
 	int rndled;
 	int number = NUM_LEDS_1 / 2;
@@ -214,7 +241,7 @@ inline void LED_TempColor3(String color)
 	}
 }
 
-inline void LED_TempColor4(String color)
+inline void LED_TempColor4(String color, logger &Logging_one)
 {
 	int rndledArray[NUM_LEDS_1];
 	int led[NUM_LEDS_1];
@@ -235,7 +262,7 @@ inline void LED_TempColor4(String color)
 	else if (color == "orange") { colorium = HUE_ORANGE; }
 	else if (color == "red") { colorium = HUE_RED; }
 
-	Serial.println("LED_TempColor");
+	Serial.println("WS2812_FadeToTargetColor");
 
 	while (true)
 	{
@@ -341,33 +368,35 @@ inline void LED_TempColor4(String color)
 	}
 }
 
-inline void LED_TempColor(String color)
+// Langsamer übergang von einer zu nächsten farbe
+inline void WS2812_FadeToTargetColor(float temp, float hum, logger &Logging_one)
 {
+	Logging_one.writeLog("Call - WS2812_FadeToTargetColor", debug);
 	int range = NUM_LEDS_1;
 	int blubb = 0;
 	int fromblubb = 0;
 	HSVHue colorium = {};
+	String color;
 
-	if (color == "arctic") { colorium = HUE_AQUA; blubb = 128; }
-	else if (color == "blue") { colorium = HUE_BLUE;  blubb = 160; }
-	else if (color == "green") { colorium = HUE_GREEN;  blubb = 96; }
-	else if (color == "yellow") { colorium = HUE_YELLOW; blubb = 64; }
-	else if (color == "orange") { colorium = HUE_ORANGE; blubb = 32; }
-	else if (color == "red") { colorium = HUE_RED; blubb = 0; }
+	if (			  temp	<= 20 && hum <= 50)	{ Logging_one.writeLog("Set color 'arctic'", debug);	colorium = HUE_AQUA; blubb = 128; }
+	if (temp >	20 && temp	<= 23 && hum <= 50) { Logging_one.writeLog("Set color 'blue'",	debug);		colorium = HUE_BLUE;  blubb = 160; }
+	if (temp >	23 && temp	<= 25 && hum >	55)	{ Logging_one.writeLog("Set color 'green'",	debug);		colorium = HUE_GREEN;  blubb = 96; }
+	if (temp >	25 && temp	<= 27 && hum >= 60) { Logging_one.writeLog("Set color 'yellow'", debug);	colorium = HUE_YELLOW; blubb = 64; }
+	if (temp >	27 && temp	<= 30 && hum >= 70) { Logging_one.writeLog("Set color 'orange'", debug);	colorium = HUE_ORANGE; blubb = 32; }
+	if (temp >	30				  && hum >= 80) { Logging_one.writeLog("Set color 'red'", debug);		colorium = HUE_RED; blubb = 0; }
 
-	if (color != previousColor)
+	if (colorium != previousColor)
 	{
 		if (fromblubb < blubb)
 		{
 			for (int i = fromblubb;i <= blubb; i++)
-			{
-				//Serial.println("blubb++");
-				//Serial.println(i);
+			{;
+				Logging_one.writeLog("TColor - blubb++: " + i, extremedebug);
 				for (int element = 0;element <= range; element++)
 				{
-					//Serial.println("show leds");
-					//Serial.println(element);
+					Logging_one.writeLog("TColor - show leds: " + element, extremedebug);
 					ledsA[element] = CHSV(i, 255, 255);
+					delay(5);
 				}
 				LEDS.show();
 			}
@@ -376,19 +405,18 @@ inline void LED_TempColor(String color)
 		{
 			for (int i = fromblubb;i >= blubb; i--)
 			{
-				//Serial.println("blubb--");
-				//Serial.println(i);
+				Logging_one.writeLog("TColor - blubb--: " + i, extremedebug);
 				for (int element = 0;element <= range; element++)
 				{
-					//Serial.println("show leds");
-					//Serial.println(element);
+					Logging_one.writeLog("TColor - show leds: " + element, extremedebug);
 					ledsA[element] = CHSV(i, 255, 255);
+					delay(5);
 				}
 				LEDS.show();
 			}
 		}
 		fromblubb = blubb;
-		previousColor = color;
+		previousColor = colorium;
 	}
 }
 #endif

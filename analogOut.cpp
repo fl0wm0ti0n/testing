@@ -1,9 +1,10 @@
-
-// 
-// 
-// 
+// @file           analogOut.cpp
+// @author         flow@p0cki.net
+// @date           08.2019
+// @brief          class for analog output
 
 #include "analogOut.h"
+#include "logger.h"
 
 analogOut::analogOut(String n, int p)
 	:actor(digitalOut_act, n, p)
@@ -12,22 +13,21 @@ analogOut::analogOut(String n, int p)
 }
 
 analogOut::~analogOut()
-{
-}
+= default;
 
-bool analogOut::setValue(int v)
+bool analogOut::setValue(int v, logger &Logging_one)
 {
-	//Serial.begin(9600);
+	Logging_one.writeLog("Call - analogOut - setValue", extremedebug);
 	if (getValue() != v)
 	{
-		//Serial.println("SetValue");
-		actor::setValue(v);
+		//actor::setValue(v);
 		analogWrite(getPin(), v);
 	}
 	return true;
 }
 
-bool analogOut::doggle()
+bool analogOut::doggle(logger &Logging_one)
 {
-	return setValue(!getValue());
+	Logging_one.writeLog("Call - analogOut - doggle", extremedebug);
+	return setValue(!getValue(), Logging_one);
 }
