@@ -30,6 +30,7 @@ ATmega8 only support analogWrite() on pins 9, 10, and 11.
 
 class analogOut :public actor
 {
+	int lightcounter = 0;
 
 public:
 	analogOut(String n, int p);
@@ -38,5 +39,6 @@ public:
 	virtual bool setValue(int v,logger &Logging_one);
 
 	bool doggle(logger &Logging_one);
+	void SlowlyIncreaseOrDecreaseValue(bool o_sensor, int o_actor, logger& log);
 };
 #endif

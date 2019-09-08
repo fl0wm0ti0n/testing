@@ -17,7 +17,6 @@
 #define	NUM_LEDS_1		60
 #define	NUM_LEDS_2		60
 
-
 //****** PWM OUTPUT PINS ******
 // On most Arduino boards(those with the ATmega168 or ATmega328), this function works on pins 3, 5, 6, 9, 10,
 // and 11. On the Arduino Mega, it works on pins 2 - 13 and 44 - 46. Older Arduino boards with an
@@ -39,7 +38,7 @@
 
 
 //****** DEFAULT *********
-#define	DEFAULT_LOGLEVEL		debug
+#define	DEFAULT_LOGLEVEL		extremedebug
 #define	DEFAULT_LOGTARGET		serial
 #define	DEFAULT_LIGHTFDELAY		20
 #define DEFAULT_THRESHOLD		0.5
@@ -54,5 +53,13 @@
 #define        laufzeit_1k5		1500UL
 #define        laufzeit_2k		2000UL
 #define        laufzeit_5k		5000UL
+
+// Color Decisions
+#define		   CHANGEHUE_AQUA		temp <= 20 && hum <= 50
+#define		   CHANGEHUE_BLUE		temp > 20 && temp <= 23 && hum <= 50
+#define		   CHANGEHUE_GREEN		temp > 23 && temp <= 25 && hum > 55
+#define		   CHANGEHUE_YELLOW		temp > 25 && temp <= 27 && hum >= 60
+#define		   CHANGEHUE_ORANGE		temp > 27 && temp <= 30 && hum >= 70
+#define		   CHANGEHUE_RED		temp > 30 && hum >= 80
 
 #endif

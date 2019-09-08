@@ -16,7 +16,7 @@ enum t_actor_type
 {
 	undefined_act = 0,
 	digitalOut_act = 1,
-	AnalogOut_act = 2,
+	analogOut_act = 2,
 	I2C_act = 3,
 	WS2812_act = 4,
 	PWM_act = 5,

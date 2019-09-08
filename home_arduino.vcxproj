@@ -90,9 +90,9 @@
     <ClInclude Include="gasSensor.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="motionSensor.h" />
+    <ClInclude Include="neopixel.h" />
     <ClInclude Include="sensor.h" />
     <ClInclude Include="touchSensor.h" />
-    <ClInclude Include="neopixelobjekt.h" />
     <ClInclude Include="randomtemplight.h" />
     <ClInclude Include="Streaming.h" />
     <ClInclude Include="__vm\.home_arduino.vsarduino.h" />
@@ -109,6 +109,7 @@
     <ClCompile Include="gasSensor.cpp" />
     <ClCompile Include="logger.cpp" />
     <ClCompile Include="motionSensor.cpp" />
+    <ClCompile Include="neopixel.cpp" />
     <ClCompile Include="sensor.cpp" />
     <ClCompile Include="TouchSensor.cpp" />
   </ItemGroup>

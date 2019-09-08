@@ -8,11 +8,27 @@ decisions::decisions(t_decision_type t, String n)
 decisions::~decisions()
 = default;
 
+// TEMPERATUR LICHT
+// Licht nach Temperatur muss sich sofort einschalten auch ohne Änderung bei Temperatur aber nur wenn es das erste mal startet also Bewegung erkannt wird.
+// Licht muss sofort im korrekten Farbwert starten.
+
+int decisions::colorTemperaturChange(float temp, float hum, logger &log)
+{
+	log.writeLog("Call - WS2812_FadeToTargetColor", debug);
+	if (CHANGEHUE_AQUA)		{ log.writeLog("Set color 'arctic'", debug);	colorium = 128; }
+	if (CHANGEHUE_BLUE)		{ log.writeLog("Set color 'blue'", debug);		colorium = 160; }
+	if (CHANGEHUE_GREEN)	{ log.writeLog("Set color 'green'", debug);		colorium = 96; }
+	if (CHANGEHUE_YELLOW)	{ log.writeLog("Set color 'yellow'", debug);	colorium = 64; }
+	if (CHANGEHUE_ORANGE)	{ log.writeLog("Set color 'orange'", debug);	colorium = 32; }
+	if (CHANGEHUE_RED)		{ log.writeLog("Set color 'red'", debug);		colorium = 0; }
+	return colorium;
+}
+
 // Wenn Bewegung "light up" bis das Licht ganz an ist nach einer am Motionsensor eingestellten Zeit geht das licht wieder aus.
 // Mainloop und millis unabhängig (alles muss auf diesen Prozess warten)
-/*int decisions::LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &Logging_one)
+/*int decisions::LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &log)
 {
-	Logging_one.writeLog("Call - LichtKomplettSchalten_SobaldImpuls", extremedebug);
+	log.writeLog("Call - LichtKomplettSchalten_SobaldImpuls", extremedebug);
 
 	if (o_sensor == true)
 	{
@@ -22,7 +38,7 @@ decisions::~decisions()
 			{
 				LightStripe_one.setValue(i, Logging_one);
 				delay(DEFAULT_LIGHTFDELAY);
-				Logging_one.writeLog("Licht an - " + String(LightStripe_one.getValue()), debug);
+				log.writeLog("Licht an - " + String(LightStripe_one.getValue()), debug);
 			}
 			LightStripe_one.setValue(255, Logging_one);
 		}
@@ -36,7 +52,7 @@ decisions::~decisions()
 			{
 				LightStripe_one.setValue(j, Logging_one);
 				delay(DEFAULT_LIGHTFDELAY);
-				Logging_one.writeLog("Licht aus - " + String(LightStripe_one.getValue()), debug);
+				log.writeLog("Licht aus - " + String(LightStripe_one.getValue()), debug);
 			}
 			LightStripe_one.setValue(0, Logging_one);
 		}
@@ -48,18 +64,18 @@ decisions::~decisions()
 // Impuls effect
 // Mit Motionsensor justierbar
 // Mainloop und millis abhängig (nichts muss auf diesen Prozess warten)
-int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &Logging_one)
+int decisions::lichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &log)
 {
-	Logging_one.writeLog("Call - LichtAnSolangeInputImpulsAn", extremedebug);
+	log.writeLog("Call - lichtAnSolangeInputImpulsAn", extremedebug);
 
 	if (o_sensor == true)
 	{
 		if (lightcounter != 255)
 		{
-			if (lightcounter <= 255)
+			if (lightcounter < 255)
 			{
 				lightcounter++;
-				Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+				log.writeLog("Licht an - " + String(lightcounter), debug);
 			}
 		}
 	}
@@ -67,22 +83,23 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 	{
 		if (lightcounter != 0)
 		{
-			if (lightcounter >= 0)
+			if (lightcounter > 0)
 			{
 				lightcounter--;
-				Logging_one.writeLog("Licht aus - " + String(lightcounter), debug);
+				log.writeLog("Licht aus - " + String(lightcounter), debug);
 			}
 		}
 	}
 	return lightcounter;
 }
 
+
 // Wenn Bewegung "light up" bis volle Stärke - erst danach "light off"
 // NICHT mit Motionsensor justierbar
 // Mainloop und millis abhängig (nichts muss auf diesen Prozess warten)
-/*int decisions::LqichtAnSolangeInputImpulsAn_AusErlaubtNach255(bool o_sensor, int o_actor, logger &Logging_one)
+/*int decisions::LqichtAnSolangeInputImpulsAn_AusErlaubtNach255(bool o_sensor, int o_actor, logger &log)
 {
-	Logging_one.writeLog("Call - LichtAnSolangeInputImpulsAn_AusErlaubtNach255", extremedebug);
+	log.writeLog("Call - LichtAnSolangeInputImpulsAn_AusErlaubtNach255", extremedebug);
 
 	if (LightStripe_one.getValue() != 255 && lightdoggle == 0)
 	{
@@ -92,13 +109,13 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 			LightStripe_one.setValue(lightcounter, Logging_one);
 			lightdoggle = 0;
 			lightswitch = 0;
-			Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+			log.writeLog("Licht an - " + String(lightcounter), debug);
 		}
 		else if (lightcounter <= 255 && Motionsensor_one.getValue(Logging_one) == false)
 		{
 			LightStripe_one.setValue(lightcounter, Logging_one);
 			if (lightswitch == 0) { lightcounter++; }
-			Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+			log.writeLog("Licht an - " + String(lightcounter), debug);
 		}
 	}
 	else
@@ -114,7 +131,7 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 			LightStripe_one.setValue(lightcounter, Logging_one);
 			lightdoggle = 1;
 			lightswitch = 1;
-			Logging_one.writeLog("Licht aus - " + String(lightcounter), debug);
+			log.writeLog("Licht aus - " + String(lightcounter), debug);
 		}
 	}
 	else
@@ -126,9 +143,9 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 	/*
 	// Wenn Bewegung "light up" bis das Licht ganz an ist nach einer am Motionsensor eingestellten Zeit geht das licht wieder aus.
 	// Mainloop und millis unabhängig (alles muss auf diesen Prozess warten)
-	void decisions::LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &Logging_one)
+	void decisions::LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &log)
 	{
-		Logging_one.writeLog("Call - LichtKomplettSchalten_SobaldImpuls", extremedebug);
+		log.writeLog("Call - LichtKomplettSchalten_SobaldImpuls", extremedebug);
 
 		if (Motionsensor_one.getValue(Logging_one) == true)
 		{
@@ -138,7 +155,7 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 				{
 					LightStripe_one.setValue(i, Logging_one);
 					delay(DEFAULT_LIGHTFDELAY);
-					Logging_one.writeLog("Licht an - " + String(LightStripe_one.getValue()), debug);
+					log.writeLog("Licht an - " + String(LightStripe_one.getValue()), debug);
 				}
 				LightStripe_one.setValue(255, Logging_one);
 			}
@@ -152,7 +169,7 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 				{
 					LightStripe_one.setValue(j, Logging_one);
 					delay(DEFAULT_LIGHTFDELAY);
-					Logging_one.writeLog("Licht aus - " + String(LightStripe_one.getValue()), debug);
+					log.writeLog("Licht aus - " + String(LightStripe_one.getValue()), debug);
 				}
 				LightStripe_one.setValue(0, Logging_one);
 			}
@@ -163,10 +180,10 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 	// Impuls effect
 	// Mit Motionsensor justierbar
 	// Mainloop und millis abhängig (nichts muss auf diesen Prozess warten)
-	void decisions::LichtAnSolangeInputImpulsAn(sensor o_sensor, actor o_actor, logger &Logging_one)
+	void decisions::lichtAnSolangeInputImpulsAn(sensor o_sensor, actor o_actor, logger &log)
 	{
 
-		Logging_one.writeLog("Call - LichtAnSolangeInputImpulsAn", extremedebug);
+		log.writeLog("Call - lichtAnSolangeInputImpulsAn", extremedebug);
 
 		if (Motionsensor_one.getValue(Logging_one) == true)
 		{
@@ -176,7 +193,7 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 				{
 					lightcounter++;
 					LightStripe_one.setValue(lightcounter, Logging_one);
-					Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+					log.writeLog("Licht an - " + String(lightcounter), debug);
 				}
 			}
 		}
@@ -188,7 +205,7 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 				{
 					lightcounter--;
 					LightStripe_one.setValue(lightcounter, Logging_one);
-					Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+					log.writeLog("Licht an - " + String(lightcounter), debug);
 				}
 			}
 		}
@@ -197,25 +214,25 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 	// Wenn Bewegung "light up" bis volle Stärke - erst danach "light off"
 	// NICHT mit Motionsensor justierbar
 	// Mainloop und millis abhängig (nichts muss auf diesen Prozess warten)
-	void decisions::LichtAnSolangeInputImpulsAn_AusErlaubtNach255(sensor o_sensor, actor o_actor, logger &Logging_one)
+	void decisions::LichtAnSolangeInputImpulsAn_AusErlaubtNach255(sensor o_sensor, actor o_actor, logger &log)
 	{
-		Logging_one.writeLog("Call - LichtAnSolangeInputImpulsAn_AusErlaubtNach255", extremedebug);
+		log.writeLog("Call - LichtAnSolangeInputImpulsAn_AusErlaubtNach255", extremedebug);
 
 		if (LightStripe_one.getValue() != 255 && lightdoggle == 0)
 		{
-			if (LightStripe_one.getValue() <= 255 && Motionsensor_one.getValue(Logging_one) == true)
+			if (LightStripe_one.getValue() <= 255 && Motionsensor_one.getValue(log) == true)
 			{
 				lightcounter++;
 				LightStripe_one.setValue(lightcounter, Logging_one);
 				lightdoggle = 0;
 				lightswitch = 0;
-				Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+				log.writeLog("Licht an - " + String(lightcounter), debug);
 			}
-			else if (lightcounter <= 255 && Motionsensor_one.getValue(Logging_one) == false)
+			else if (lightcounter <= 255 && Motionsensor_one.getValue(log) == false)
 			{
 				LightStripe_one.setValue(lightcounter, Logging_one);
 				if (lightswitch == 0) { lightcounter++; }
-				Logging_one.writeLog("Licht an - " + String(lightcounter), debug);
+				log.writeLog("Licht an - " + String(lightcounter), debug);
 			}
 		}
 		else
@@ -223,15 +240,15 @@ int decisions::LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &L
 			lightdoggle = 1;
 		}
 
-		if (LightStripe_one.getValue() != 0 && lightdoggle == 1 && Motionsensor_one.getValue(Logging_one) == false)
+		if (LightStripe_one.getValue() != 0 && lightdoggle == 1 && Motionsensor_one.getValue(log) == false)
 		{
 			if (LightStripe_one.getValue() > 0)
 			{
 				lightcounter--;
-				LightStripe_one.setValue(lightcounter, Logging_one);
+				LightStripe_one.setValue(lightcounter, log);
 				lightdoggle = 1;
 				lightswitch = 1;
-				Logging_one.writeLog("Licht aus - " + String(lightcounter), debug);
+				log.writeLog("Licht aus - " + String(lightcounter), debug);
 			}
 		}
 		else

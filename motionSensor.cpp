@@ -15,9 +15,9 @@ motionSensor::motionSensor(String n, int p)
 motionSensor::~motionSensor()
 = default;
 
-bool motionSensor::getValue(logger &logging_one)
+bool motionSensor::getValue(logger &log)
 {
-	logging_one.writeLog("Call - motion - getValue", extremedebug);
+	log.writeLog("Call - motion - GetValue", extremedebug);
 	
 	/*if (digitalRead(getPin()) == HIGH)
 	{
@@ -34,14 +34,14 @@ if (digitalRead(getPin()) == LOW && iMotionState != 0)
 {
 	iMotionState = 0;
 	iMotionValue = false;
-	logging_one.writeLog("Motion: is true", sensordata);
+	log.writeLog("Motion: is true", sensordata);
 }
 
 if (digitalRead(getPin()) == HIGH && iMotionState != 1)
 {
 	iMotionState = 1;
 	iMotionValue = true;
-	logging_one.writeLog("Motion: is false", sensordata);
+	log.writeLog("Motion: is false", sensordata);
 }
 		return iMotionValue;
 }

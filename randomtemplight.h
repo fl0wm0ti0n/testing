@@ -1,5 +1,5 @@
-#ifndef _HOME_RANDOMTEMPLIGHT_h
-#define _HOME_RANDOMTEMPLIGHT_h
+#ifndef _RANDOMTEMPLIGHT_h
+#define _RANDOMTEMPLIGHT_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "arduino.h"
@@ -20,16 +20,16 @@ int numstops = round(255 / NUM_LEDS_1);
 CRGB ledsA[NUM_LEDS_1];
 HSVHue previousColor;
 
-inline CRGB* neopixelobjekt(int brightness, logger &logging_one)
+inline CRGB* neopixelobjekt(int brightness, logger &log)
 {
-	logging_one.writeLog("Setup WS2812B...", debug);
+	log.writeLog("Setup WS2812B...", debug);
 	LEDS.setBrightness(brightness);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
 	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 	return ledsA;
 }
 
-inline void colorshift(int onoff, logger &Logging_one)
+inline void colorshift(int onoff, logger &log)
 {
 	switch (onoff)
 	{
@@ -56,7 +56,7 @@ inline void colorshift(int onoff, logger &Logging_one)
 	delay(idelay);
 }
 
-inline void rainbow_effect(int onoff, logger &Logging_one)
+inline void rainbow_effect(int onoff, logger &log)
 {
 	switch (onoff)
 	{
@@ -84,7 +84,7 @@ inline void rainbow_effect(int onoff, logger &Logging_one)
 	delay(idelay);
 }
 
-inline void LED_TempColor2(String color, logger &Logging_one)
+inline void LED_TempColor2(String color, logger &log)
 {
 	int rnd[NUM_LEDS_1];
 	int rndbright[NUM_LEDS_1];
@@ -151,7 +151,7 @@ inline void LED_TempColor2(String color, logger &Logging_one)
 
 			/*if (rndbright[j] + 1 <= 255)
 			{
-				ledsA[rnd[j]] = CHSV(colorium, 255, rndbright[j] + 1);
+				ledsA_[rnd[j]] = CHSV(colorium_, 255, rndbright[j] + 1);
 
 			}*/
 
@@ -203,7 +203,7 @@ inline void LED_TempColor2(String color, logger &Logging_one)
 	}
 }
 
-inline void LED_TempColor3(String color, logger &Logging_one)
+inline void LED_TempColor3(String color, logger &log)
 {
 	int rndled;
 	int number = NUM_LEDS_1 / 2;
@@ -241,7 +241,7 @@ inline void LED_TempColor3(String color, logger &Logging_one)
 	}
 }
 
-inline void LED_TempColor4(String color, logger &Logging_one)
+inline void LED_TempColor4(String color, logger &log)
 {
 	int rndledArray[NUM_LEDS_1];
 	int led[NUM_LEDS_1];
@@ -369,32 +369,34 @@ inline void LED_TempColor4(String color, logger &Logging_one)
 }
 
 // Langsamer übergang von einer zu nächsten farbe
-inline void WS2812_FadeToTargetColor(float temp, float hum, logger &Logging_one)
+inline void WS2812_FadeToTargetColor(float temp, float hum, logger &log)
 {
-	Logging_one.writeLog("Call - WS2812_FadeToTargetColor", debug);
+	log.writeLog("Call - WS2812_FadeToTargetColor", debug);
 	int range = NUM_LEDS_1;
 	int blubb = 0;
 	int fromblubb = 0;
 	HSVHue colorium = {};
 	String color;
 
-	if (			  temp	<= 20 && hum <= 50)	{ Logging_one.writeLog("Set color 'arctic'", debug);	colorium = HUE_AQUA; blubb = 128; }
-	if (temp >	20 && temp	<= 23 && hum <= 50) { Logging_one.writeLog("Set color 'blue'",	debug);		colorium = HUE_BLUE;  blubb = 160; }
-	if (temp >	23 && temp	<= 25 && hum >	55)	{ Logging_one.writeLog("Set color 'green'",	debug);		colorium = HUE_GREEN;  blubb = 96; }
-	if (temp >	25 && temp	<= 27 && hum >= 60) { Logging_one.writeLog("Set color 'yellow'", debug);	colorium = HUE_YELLOW; blubb = 64; }
-	if (temp >	27 && temp	<= 30 && hum >= 70) { Logging_one.writeLog("Set color 'orange'", debug);	colorium = HUE_ORANGE; blubb = 32; }
-	if (temp >	30				  && hum >= 80) { Logging_one.writeLog("Set color 'red'", debug);		colorium = HUE_RED; blubb = 0; }
+	// In decisions verschieben:
+	if (			  temp	<= 20 && hum <= 50)	{ log.writeLog("Set color 'arctic'", debug);	colorium = HUE_AQUA; blubb = 128; }
+	if (temp >	20 && temp	<= 23 && hum <= 50) { log.writeLog("Set color 'blue'",	debug);		colorium = HUE_BLUE;  blubb = 160; }
+	if (temp >	23 && temp	<= 25 && hum >	55)	{ log.writeLog("Set color 'green'",	debug);		colorium = HUE_GREEN;  blubb = 96; }
+	if (temp >	25 && temp	<= 27 && hum >= 60) { log.writeLog("Set color 'yellow'", debug);	colorium = HUE_YELLOW; blubb = 64; }
+	if (temp >	27 && temp	<= 30 && hum >= 70) { log.writeLog("Set color 'orange'", debug);	colorium = HUE_ORANGE; blubb = 32; }
+	if (temp >	30				  && hum >= 80) { log.writeLog("Set color 'red'", debug);		colorium = HUE_RED; blubb = 0; }
 
+	// Entfernen und von neopixels nutzen
 	if (colorium != previousColor)
 	{
 		if (fromblubb < blubb)
 		{
 			for (int i = fromblubb;i <= blubb; i++)
 			{;
-				Logging_one.writeLog("TColor - blubb++: " + i, extremedebug);
+			log.writeLog("TColor - blubb++: " + String(i), extremedebug);
 				for (int element = 0;element <= range; element++)
 				{
-					Logging_one.writeLog("TColor - show leds: " + element, extremedebug);
+					//log.writeLog("TColor - show leds: " + String(element), extremedebug);
 					ledsA[element] = CHSV(i, 255, 255);
 					delay(5);
 				}
@@ -405,10 +407,10 @@ inline void WS2812_FadeToTargetColor(float temp, float hum, logger &Logging_one)
 		{
 			for (int i = fromblubb;i >= blubb; i--)
 			{
-				Logging_one.writeLog("TColor - blubb--: " + i, extremedebug);
+				log.writeLog("TColor - blubb--: " + String(i), extremedebug);
 				for (int element = 0;element <= range; element++)
 				{
-					Logging_one.writeLog("TColor - show leds: " + element, extremedebug);
+					//log.writeLog("TColor - show leds: " + String(element), extremedebug);
 					ledsA[element] = CHSV(i, 255, 255);
 					delay(5);
 				}

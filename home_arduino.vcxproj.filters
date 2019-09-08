@@ -45,9 +45,6 @@
     <ClInclude Include="__vm\.testing.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="neopixelobjekt.h">
-      <Filter>Header Files\actors</Filter>
-    </ClInclude>
     <ClInclude Include="randomtemplight.h">
       <Filter>Header Files\misc</Filter>
     </ClInclude>
@@ -93,6 +90,9 @@
     <ClInclude Include="decisions.h">
       <Filter>Header Files\main</Filter>
     </ClInclude>
+    <ClInclude Include="neopixel.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="actor.cpp">
@@ -128,11 +128,16 @@
     <ClCompile Include="logger.cpp">
       <Filter>Source Files\main</Filter>
     </ClCompile>
+    <ClCompile Include="neopixel.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
     <ClCompile Include="decisions.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="home_arduino.ino" />
+    <None Include="home_arduino.ino">
+      <Filter>Source Files\main</Filter>
+    </None>
   </ItemGroup>
 </Project>

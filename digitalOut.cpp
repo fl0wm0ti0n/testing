@@ -20,7 +20,7 @@ bool digitalOut::setValue(int v)
 	//Serial.begin(9600);
 	if (getValue() != v)
 	{
-		//Serial.println("SetValue");
+		//Serial.println("setValue");
 		actor::setValue(v);
 		digitalWrite(getPin(),v);
 	}

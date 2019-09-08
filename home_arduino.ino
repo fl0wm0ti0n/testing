@@ -13,6 +13,7 @@
 #include "gasSensor.h"
 #include "logger.h"
 #include "decisions.h"
+#include "neopixel.h"
 
 //*******************************************************
 //********************* DECLARATION *********************
@@ -21,9 +22,11 @@
 // Objekte welche sofort benötigt werden.
 logger Logging_one(DEFAULT_LOGLEVEL, DEFAULT_LOGTARGET, "Logging1");
 analogOut LightStripe_one("lightstripe 1", PIN_PWM_2);
+neopixel WS2812Stripe("WS2812", PIN_WS2812_1, NUM_LEDS_1);
 motionSensor Motionsensor_one("motionsensor 1", PIN_MOTION_1);
 dhtSensor DHTSensor_one("dhtsensor 1", PIN_HUM_1);
-decisions LightUpStripe(lightOn,"LichtAnAus");
+//decisions LightUpStripe(lightOn,"LichtAnAus");
+decisions ChangeColor(colorChange, "FarbeNachTemp");
 //gasSensor gasSensor("gassensor 1 - MQ135", PIN_GAS_MQ135_1);
 //gasSensor gasSensor2("gassensor 2 - MQ7", PIN_GAS_MQ7_1);
 
@@ -38,15 +41,20 @@ unsigned long startzeit_5 = 0;
 void motionCheck()
 {
 	Logging_one.writeLog("Call - motionCheck", debug);
-	LightStripe_one.setValue((LightUpStripe.LichtAnSolangeInputImpulsAn(Motionsensor_one.getValue(Logging_one), LightStripe_one.getValue(), Logging_one)), Logging_one);
+	int motionResult = Motionsensor_one.getValue(Logging_one);
+	int lightstripeResult = LightStripe_one.getValue();
+	LightStripe_one.SlowlyIncreaseOrDecreaseValue(motionResult, lightstripeResult, Logging_one);
 }
 
 void dhtCheck()
 {
 	Logging_one.writeLog("Call - dhtCheck", debug);
+	int motionResult = Motionsensor_one.getValue(Logging_one);
 	float hum = DHTSensor_one.getHumValueOnlyIfChanged(Logging_one);
 	float temp = DHTSensor_one.getTempValueOnlyIfChanged(Logging_one);
-	WS2812_FadeToTargetColor(temp, hum, Logging_one);
+
+	//WS2812Stripe.
+
 }
 
 	//*******************************************************
@@ -55,7 +63,7 @@ void dhtCheck()
 void setup()
 {
 	Logging_one.writeLog("Setup Begin", debug);
-	neopixelobjekt(255, Logging_one);
+	WS2812Stripe.InitNeoPixel(255, Logging_one);
 	Logging_one.writeLog("Setup End", debug);
 }
 

@@ -33,16 +33,18 @@ private:
 
 	// Variablen für Lichtklassen
 	int lightcounter = 0;
-	int lightdoggle = 0;
-	int lightswitch = 1;
+
+	// Temp Color
+	int colorium = 0;
 
 public:
 	decisions(t_decision_type t, String n);
 	virtual ~decisions();
 
-	int LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &Logging_one);
-	int LichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &Logging_one);
-	int LichtAnSolangeInputImpulsAn_AusErlaubtNach255(bool o_sensor, int o_actor, logger &Logging_one);
+	int colorTemperaturChange(float temp, float hum, logger &log);
+	int LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &log);
+	int lichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &log);
+	int LichtAnSolangeInputImpulsAn_AusErlaubtNach255(bool o_sensor, int o_actor, logger &log);
 
 	t_decision_type getType()
 	{
