@@ -45,3 +45,9 @@ if (digitalRead(getPin()) == HIGH && iMotionState != 1)
 }
 		return iMotionValue;
 }
+
+bool motionSensor::trueIfStatusChanged(logger &log)
+{
+	log.writeLog("Call - motion - trueIfStatusChanged", extremedebug);
+	// toDo!
+}

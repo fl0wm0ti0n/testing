@@ -34,7 +34,7 @@
 #define PIN_SONIC_2
 #define PIN_GAS_MQ135_1	A6
 #define PIN_GAS_MQ7_1	A7
-#define PIN_DUST_1		12
+#define PIN_DUST_1		12dd
 
 
 //****** DEFAULT *********
@@ -42,12 +42,19 @@
 #define	DEFAULT_LOGTARGET		serial
 #define	DEFAULT_LIGHTFDELAY		20
 #define DEFAULT_THRESHOLD		0.5
-
+#define DEFAULT_MAXVALUE		255
+#define DEFAULT_MINVALUE		0
+#define DEFAULT_ALLLEDS			-1
 
 // Definitionen der einzelnen Schaltzeiten
 #define        laufzeit_10		10UL
+#define        laufzeit_15		15UL
 #define        laufzeit_20		20UL
+#define        laufzeit_25		25UL
 #define        laufzeit_30		30UL
+#define        laufzeit_50		50UL
+#define        laufzeit_100		100UL
+#define        laufzeit_250		250UL
 #define        laufzeit_500		500UL
 #define        laufzeit_1k		1000UL
 #define        laufzeit_1k5		1500UL
@@ -55,11 +62,19 @@
 #define        laufzeit_5k		5000UL
 
 // Color Decisions
-#define		   CHANGEHUE_AQUA		temp <= 20 && hum <= 50
+
+#define		   CHANGEHUE_AQUA		temp <= 20
+#define		   CHANGEHUE_BLUE		temp > 20 && temp <= 23
+#define		   CHANGEHUE_GREEN		temp > 23 && temp <= 25
+#define		   CHANGEHUE_YELLOW		temp > 25 && temp <= 27
+#define		   CHANGEHUE_ORANGE		temp > 27 && temp <= 30
+#define		   CHANGEHUE_RED		temp > 30
+
+/*#define		   CHANGEHUE_AQUA		temp <= 20 && hum <= 50
 #define		   CHANGEHUE_BLUE		temp > 20 && temp <= 23 && hum <= 50
 #define		   CHANGEHUE_GREEN		temp > 23 && temp <= 25 && hum > 55
 #define		   CHANGEHUE_YELLOW		temp > 25 && temp <= 27 && hum >= 60
 #define		   CHANGEHUE_ORANGE		temp > 27 && temp <= 30 && hum >= 70
-#define		   CHANGEHUE_RED		temp > 30 && hum >= 80
+#define		   CHANGEHUE_RED		temp > 30 && hum >= 80*/
 
 #endif

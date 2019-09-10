@@ -23,6 +23,7 @@ public:
 	virtual ~motionSensor();				// Destructor
 
 	virtual bool getValue(logger &logging_one);		// Method: get motion Value
+	bool trueIfStatusChanged(logger& log);
 };
 
 #endif

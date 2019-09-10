@@ -136,8 +136,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="home_arduino.ino">
-      <Filter>Source Files\main</Filter>
-    </None>
+    <None Include="home_arduino.ino" />
   </ItemGroup>
 </Project>

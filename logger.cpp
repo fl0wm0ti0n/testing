@@ -108,6 +108,12 @@ void logger::handleLog(String time, String text, t_log_level llevel)
 		switch (m_iLogTarget_)
 		{
 		case 0:
+			//Serial.println(String(time) + " : " + String(aEnumlvl[llevel]) + " : " + String(text));
+			/*Serial.print(String(time));
+			Serial.print(" : ");
+			Serial.print(String(aEnumlvl[llevel]));
+			Serial.print(" : ");
+			Serial.println(String(text));*/
 			Serial << time << " : " << aEnumlvl[llevel] << " : " << text << endl;
 			break;
 		case 1:
@@ -117,6 +123,7 @@ void logger::handleLog(String time, String text, t_log_level llevel)
 			// Archivdata - noch nicht implementiert!
 			break;
 		default:
+			//Serial.println(String(time) + " : " + String(aEnumlvl[llevel]) + " : " + String(text));
 			Serial << time << " : " << aEnumlvl[llevel] << " : " << text << endl;
 			break;
 		}

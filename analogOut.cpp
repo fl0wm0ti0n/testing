@@ -30,34 +30,34 @@ bool analogOut::setValue(int v, logger &log)
 bool analogOut::doggle(logger &log)
 {
 	log.writeLog("Call - analogOut - doggle", extremedebug);
-	return setValue(!getValue(), Logging_one);
+	return setValue(!getValue(), log);
 }
 
-void analogOut::SlowlyIncreaseOrDecreaseValue(bool o_sensor, int o_actor, logger &log)
+void analogOut::SlowlyIncreaseOrDecreaseValue(bool sensorResult, int maxValue, logger &log)
 {
-	log.writeLog("Call - lichtAnSolangeInputImpulsAn", extremedebug);
+	log.writeLog("Call - SlowlyIncreaseOrDecreaseValue", extremedebug);
 
-	if (o_sensor == true)
+	if (sensorResult == true)
 	{
-		if (lightcounter != 255)
+		if (lightcounter_ != maxValue)
 		{
-			if (lightcounter < 255)
+			if (lightcounter_ < maxValue)
 			{
-				lightcounter++;
-				log.writeLog("Licht an - " + String(lightcounter), debug);
+				lightcounter_++;
+				log.writeLog("Value Up - " + String(lightcounter_), extremedebug);
 			}
 		}
 	}
 	else
 	{
-		if (lightcounter != 0)
+		if (lightcounter_ != 0)
 		{
-			if (lightcounter > 0)
+			if (lightcounter_ > 0)
 			{
-				lightcounter--;
-				log.writeLog("Licht aus - " + String(lightcounter), debug);
+				lightcounter_--;
+				log.writeLog("Value Down - " + String(lightcounter_), extremedebug);
 			}
 		}
 	}
-	setValue(lightcounter, log);
+	setValue(lightcounter_, log);
 }

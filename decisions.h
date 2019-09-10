@@ -43,7 +43,7 @@ public:
 
 	int colorTemperaturChange(float temp, float hum, logger &log);
 	int LichtKomplettSchalten_SobaldImpuls(bool o_sensor, int o_actor, logger &log);
-	int lichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &log);
+	int lichtAnSolangeInputImpulsAn(bool o_sensor, logger &log);
 	int LichtAnSolangeInputImpulsAn_AusErlaubtNach255(bool o_sensor, int o_actor, logger &log);
 
 	t_decision_type getType()

@@ -38,23 +38,31 @@ unsigned long startzeit_3 = 0;
 unsigned long startzeit_4 = 0;
 unsigned long startzeit_5 = 0;
 
-void motionCheck()
+void motionCheckForLight()
 {
-	Logging_one.writeLog("Call - motionCheck", debug);
+	Logging_one.writeLog("Call - motionCheckForLight", extremedebug);
 	int motionResult = Motionsensor_one.getValue(Logging_one);
-	int lightstripeResult = LightStripe_one.getValue();
-	LightStripe_one.SlowlyIncreaseOrDecreaseValue(motionResult, lightstripeResult, Logging_one);
+	LightStripe_one.SlowlyIncreaseOrDecreaseValue(motionResult, DEFAULT_MAXVALUE, Logging_one);
+}
+
+void motionCheckForNeopixel()
+{
+	Logging_one.writeLog("Call - motionCheckForNeopixel", extremedebug);
+	int motionResult = Motionsensor_one.getValue(Logging_one);
+	WS2812Stripe.SlowlyIncreaseOrDecreaseBrightness(DEFAULT_ALLLEDS, motionResult, DEFAULT_MAXVALUE, Logging_one);
 }
 
 void dhtCheck()
 {
-	Logging_one.writeLog("Call - dhtCheck", debug);
-	int motionResult = Motionsensor_one.getValue(Logging_one);
+	Logging_one.writeLog("Call - dhtCheck", extremedebug);
+	bool motionResult = Motionsensor_one.getValue(Logging_one);
 	float hum = DHTSensor_one.getHumValueOnlyIfChanged(Logging_one);
 	float temp = DHTSensor_one.getTempValueOnlyIfChanged(Logging_one);
-
-	//WS2812Stripe.
-
+	
+	if (motionResult == true)
+	{ 
+			WS2812Stripe.setHue(DEFAULT_ALLLEDS, ChangeColor.colorTemperaturChange(temp, hum, Logging_one), Logging_one);
+	}
 }
 
 	//*******************************************************
@@ -63,7 +71,7 @@ void dhtCheck()
 void setup()
 {
 	Logging_one.writeLog("Setup Begin", debug);
-	WS2812Stripe.InitNeoPixel(255, Logging_one);
+	WS2812Stripe.InitNeoPixel(DEFAULT_MAXVALUE, DEFAULT_MAXVALUE, Logging_one);
 	Logging_one.writeLog("Setup End", debug);
 }
 
@@ -76,7 +84,7 @@ void loop()
 	if (millis() - startzeit_1 >= laufzeit_20)
 	{
 		startzeit_1 = millis();
-		motionCheck();
+		motionCheckForLight();
 	}
 
 	// Alle 500 Millisekunden wird der DHT-Sensor geprüft.
@@ -84,5 +92,12 @@ void loop()
 	{
 		startzeit_2 = millis();
 		dhtCheck();
+	}
+
+	// Alle 500 Millisekunden wird der DHT-Sensor geprüft.
+	if (millis() - startzeit_3 >= laufzeit_25)
+	{
+		startzeit_3 = millis();
+		motionCheckForNeopixel();
 	}
 }

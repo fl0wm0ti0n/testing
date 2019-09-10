@@ -1,4 +1,5 @@
 #include "decisions.h"
+#include "constants.h"
 
 decisions::decisions(t_decision_type t, String n)
 	:m_iType(t), m_cName(n)
@@ -14,13 +15,14 @@ decisions::~decisions()
 
 int decisions::colorTemperaturChange(float temp, float hum, logger &log)
 {
-	log.writeLog("Call - WS2812_FadeToTargetColor", debug);
-	if (CHANGEHUE_AQUA)		{ log.writeLog("Set color 'arctic'", debug);	colorium = 128; }
-	if (CHANGEHUE_BLUE)		{ log.writeLog("Set color 'blue'", debug);		colorium = 160; }
-	if (CHANGEHUE_GREEN)	{ log.writeLog("Set color 'green'", debug);		colorium = 96; }
-	if (CHANGEHUE_YELLOW)	{ log.writeLog("Set color 'yellow'", debug);	colorium = 64; }
-	if (CHANGEHUE_ORANGE)	{ log.writeLog("Set color 'orange'", debug);	colorium = 32; }
-	if (CHANGEHUE_RED)		{ log.writeLog("Set color 'red'", debug);		colorium = 0; }
+	log.writeLog("Call - colorTempChange", extremedebug);
+	if (CHANGEHUE_AQUA)		{ colorium = 128; }
+	if (CHANGEHUE_BLUE)		{ colorium = 160; }
+	if (CHANGEHUE_GREEN)	{ colorium = 96; }
+	if (CHANGEHUE_YELLOW)	{ colorium = 64; }
+	if (CHANGEHUE_ORANGE)	{ colorium = 32; }
+	if (CHANGEHUE_RED)		{ colorium = 0; }
+	log.writeLog("Set color " + String(colorium), debug);
 	return colorium;
 }
 
@@ -64,7 +66,7 @@ int decisions::colorTemperaturChange(float temp, float hum, logger &log)
 // Impuls effect
 // Mit Motionsensor justierbar
 // Mainloop und millis abhängig (nichts muss auf diesen Prozess warten)
-int decisions::lichtAnSolangeInputImpulsAn(bool o_sensor, int o_actor, logger &log)
+int decisions::lichtAnSolangeInputImpulsAn(bool o_sensor, logger &log)
 {
 	log.writeLog("Call - lichtAnSolangeInputImpulsAn", extremedebug);
 
