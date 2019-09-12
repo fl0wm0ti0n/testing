@@ -93,6 +93,9 @@
     <ClInclude Include="neopixel.h">
       <Filter>Header Files\actors</Filter>
     </ClInclude>
+    <ClInclude Include="directionEncoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="actor.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="decisions.cpp">
       <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="directionEncoder.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

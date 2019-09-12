@@ -17,7 +17,7 @@ touchSensor::~touchSensor()
 // Gibt den Status des Sensors als Boolean zurück.
 bool touchSensor::getState(logger &log)
 {
-	log.writeLog("Call - touch - getValue", extremedebug);
+	log.writeLog("Call - touch - getState", extremedebug);
 	if (digitalRead(getPin()) == HIGH)
 	{
 		log.writeLog("Touch: is true", sensordata);
@@ -34,7 +34,7 @@ bool touchSensor::getState(logger &log)
 // Wechselt, wenn sich der Status des Sensors geändert hat. den Boolean als Doggle zwischen True und False und gibt den gewechselten Status als Boolean zurück.
 bool touchSensor::getStateWithDoggle(logger &log)
 {
-	log.writeLog("Call - touch - getValueWithDoggle", extremedebug);
+	log.writeLog("Call - touch - getStateWithDoggle", extremedebug);
 	if (digitalRead(getPin()) == HIGH && iDigitalValue != 0)
 	{
 		log.writeLog("Touch: is false", sensordata);

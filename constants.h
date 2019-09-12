@@ -24,6 +24,8 @@
 #define PIN_PWM_1		6
 #define PIN_PWM_2		9
 
+//****** 
+
 
 //****** INPUT PINS ******
 #define	PIN_HUM_1		2
@@ -34,11 +36,14 @@
 #define PIN_SONIC_2
 #define PIN_GAS_MQ135_1	A6
 #define PIN_GAS_MQ7_1	A7
-#define PIN_DUST_1		12dd
+#define PIN_DUST_1		12
+#define PIN_ENCODER_SW	10
+#define PIN_ENCODER_DT	11
+#define PIN_ENCODER_CLK	12
 
 
 //****** DEFAULT *********
-#define	DEFAULT_LOGLEVEL		extremedebug
+#define	DEFAULT_LOGLEVEL		sensordata
 #define	DEFAULT_LOGTARGET		serial
 #define	DEFAULT_LIGHTFDELAY		20
 #define DEFAULT_THRESHOLD		0.5
@@ -47,19 +52,22 @@
 #define DEFAULT_ALLLEDS			-1
 
 // Definitionen der einzelnen Schaltzeiten
-#define        laufzeit_10		10UL
-#define        laufzeit_15		15UL
-#define        laufzeit_20		20UL
-#define        laufzeit_25		25UL
-#define        laufzeit_30		30UL
-#define        laufzeit_50		50UL
-#define        laufzeit_100		100UL
-#define        laufzeit_250		250UL
-#define        laufzeit_500		500UL
-#define        laufzeit_1k		1000UL
-#define        laufzeit_1k5		1500UL
-#define        laufzeit_2k		2000UL
-#define        laufzeit_5k		5000UL
+#define		laufzeit_1		1UL
+#define		laufzeit_5		5UL
+#define		laufzeit_10		10UL
+#define		laufzeit_15		15UL
+#define		laufzeit_20		20UL
+#define		laufzeit_25		25UL
+#define     laufzeit_30		30UL
+#define     laufzeit_50		50UL
+#define     laufzeit_150	100UL
+#define     laufzeit_100	150UL
+#define     laufzeit_250	250UL
+#define     laufzeit_500	500UL
+#define     laufzeit_1k		1000UL
+#define     laufzeit_1k5	1500UL
+#define     laufzeit_2k		2000UL
+#define     laufzeit_5k		5000UL
 
 // Color Decisions
 

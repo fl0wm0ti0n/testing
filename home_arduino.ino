@@ -14,6 +14,7 @@
 #include "logger.h"
 #include "decisions.h"
 #include "neopixel.h"
+#include "directionEncoder.h"
 
 //*******************************************************
 //********************* DECLARATION *********************
@@ -27,8 +28,10 @@ motionSensor Motionsensor_one("motionsensor 1", PIN_MOTION_1);
 dhtSensor DHTSensor_one("dhtsensor 1", PIN_HUM_1);
 //decisions LightUpStripe(lightOn,"LichtAnAus");
 decisions ChangeColor(colorChange, "FarbeNachTemp");
+directionEncoder encoder_one("RichtungsEncoder", PIN_ENCODER_SW, PIN_ENCODER_CLK, PIN_ENCODER_DT);
 //gasSensor gasSensor("gassensor 1 - MQ135", PIN_GAS_MQ135_1);
 //gasSensor gasSensor2("gassensor 2 - MQ7", PIN_GAS_MQ7_1);
+
 
 // Variablen deklarieren in denen die Startzeiten
 // der einzelnen Zeitfunktionen gespeichert werden
@@ -41,7 +44,8 @@ unsigned long startzeit_5 = 0;
 void motionCheckForLight()
 {
 	Logging_one.writeLog("Call - motionCheckForLight", extremedebug);
-	int motionResult = Motionsensor_one.getValue(Logging_one);
+	//bool motionResult = Motionsensor_one.getValue(Logging_one);
+	bool motionResult = encoder_one.getSwitchLongValue(Logging_one);
 	LightStripe_one.SlowlyIncreaseOrDecreaseValue(motionResult, DEFAULT_MAXVALUE, Logging_one);
 }
 
@@ -72,6 +76,8 @@ void setup()
 {
 	Logging_one.writeLog("Setup Begin", debug);
 	WS2812Stripe.InitNeoPixel(DEFAULT_MAXVALUE, DEFAULT_MAXVALUE, Logging_one);
+	encoder_one.setClickValue(10, Logging_one);
+	WS2812Stripe.setStep(0.05);
 	Logging_one.writeLog("Setup End", debug);
 }
 
@@ -80,8 +86,22 @@ void setup()
 	//*******************************************************
 void loop()
 {
+
 	// Alle 20 Millisekunden wird der Bewegungsmelder geprüft.
-	if (millis() - startzeit_1 >= laufzeit_20)
+	if (millis() - startzeit_4 >= laufzeit_1)
+	{
+		startzeit_4 = millis();
+		WS2812Stripe.colorshift(encoder_one.getEncoderValue(Logging_one), true, Logging_one);
+	}
+
+	if (millis() - startzeit_1 >= laufzeit_100)
+	{
+		startzeit_1 = millis();
+		motionCheckForLight();
+	}
+
+	// Alle 20 Millisekunden wird der Bewegungsmelder geprüft.
+	/*if (millis() - startzeit_1 >= laufzeit_100)
 	{
 		startzeit_1 = millis();
 		motionCheckForLight();
@@ -95,9 +115,9 @@ void loop()
 	}
 
 	// Alle 500 Millisekunden wird der DHT-Sensor geprüft.
-	if (millis() - startzeit_3 >= laufzeit_25)
+	if (millis() - startzeit_3 >= laufzeit_150)
 	{
 		startzeit_3 = millis();
 		motionCheckForNeopixel();
-	}
+	}*/
 }

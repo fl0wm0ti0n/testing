@@ -6,16 +6,35 @@
 #include "neopixel.h"
 #include "FastLED.h"
 
+//Constructor
 neopixel::neopixel(String name, int pin, int numleds)
 	:actor(WS2812_act, name, pin)
 {
 	numleds_ = numleds;
 	ledsA_[numleds];
-	numstops_ = round(255 / numleds);
 }
 
+//Destructor
 neopixel::~neopixel()
 {
+}
+
+// Initialisierung
+// Der Pin muss in constants.h definiert werden
+// Die Anzahl der Leds sollte in constants.h definiert werden.
+CRGB* neopixel::InitNeoPixel(int brightness, int saturation, logger &log)
+{
+	log.writeLog("Setup WS2812...", debug);
+	brightness_ = brightness;
+	saturation_ = saturation;
+	LEDS.setBrightness(0);
+	LEDS.clear();
+	LEDS.clearData();
+	LEDS.setBrightness(brightness_);
+	LEDS.setBrightness(saturation_);
+	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA_, numleds_);
+	memset(ledsA_, 0, numleds_ * sizeof(struct CRGB));
+	return ledsA_;
 }
 
 bool neopixel::setAllLikeInput(int led, int hue, int saturation, int brightness)
@@ -76,30 +95,13 @@ bool neopixel::setBrightness(int led, int brightness, logger &log)
 	return true;
 }
 
-// Initialisiert den Ledstripe
-CRGB* neopixel::InitNeoPixel(int brightness, int saturation, logger &log)
-{
-	log.writeLog("Setup WS2812...", debug);
-	brightness_ = brightness;
-	saturation_ = saturation;
-	LEDS.setBrightness(0);
-	LEDS.clear();
-	LEDS.clearData();
-	LEDS.setBrightness(brightness_);
-	LEDS.setBrightness(saturation_);
-	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA_, numleds_);
-	memset(ledsA_, 0, numleds_ * sizeof(struct CRGB));
-	return ledsA_;
-}
-
-
 // Helligkeit langsam erhöhen oder veringern - je nach dem ob der Input True oder False ist.
 // wird led "-1" übergeben werden alle geschalten, wird eine bestimmte Zahl mitgegeben wird eine LED geschalten.
 void neopixel::SlowlyIncreaseOrDecreaseBrightness(int led, bool sensorResult, int maxBrightness, logger& log)
 {
 	log.writeLog("Call - SlowlyIncreaseOrDecreaseValue", extremedebug);
 
-	if (sensorResult == true)
+	if (sensorResult)
 	{
 		if (lightcounter_ != maxBrightness)
 		{
@@ -125,18 +127,10 @@ void neopixel::SlowlyIncreaseOrDecreaseBrightness(int led, bool sensorResult, in
 }
 
 // Farbänderung zu angegebenen Farbe
-void neopixel::fadeToTargetColor(int hue, logger &log)
+// wird led "-1" übergeben werden alle geschalten, wird eine bestimmte Zahl mitgegeben wird eine LED geschalten.
+void neopixel::fadeToTargetColor(int led, int hue, logger &log)
 {
-	log.writeLog("Call - fadeToTargetColor", debug);
-
-	/*if (fadeHue != fadeHuePrev)
-	{
-		fadeHue = hue;
-	}
-	else
-	{
-		fadeHue = fadeHuePrev;
-	}*/
+	log.writeLog("Call - fadeToTargetColor", extremedebug);
 
 	if (hue != previousColor_)
 	{
@@ -150,7 +144,7 @@ void neopixel::fadeToTargetColor(int hue, logger &log)
 					//Logging_one.writeLog("TColor - show leds: " + String(element), extremedebug);
 					ledsA_[element] = CHSV(i, 255, 255);
 				}
-				LEDS.show();
+
 			}
 		}
 		else
@@ -163,10 +157,51 @@ void neopixel::fadeToTargetColor(int hue, logger &log)
 					//Logging_one.writeLog("TColor - show leds: " + String(element), extremedebug);
 					ledsA_[element] = CHSV(i, 255, 255);
 				}
-				LEDS.show();
 			}
 		}
 		fromblubb_ = blubb_;
 		previousColor_ = colorium_;
 	}
+	setHue(led, lightcounter_, log);
+}
+
+void neopixel::colorshift(int direction, bool sensorResult, logger &log)
+{
+	if (sensorResult)
+	{
+		if (direction > 0)
+		{
+			log.writeLog("colorshift right", extremedebug);
+			for (int i = 0;i < numleds_; i++)
+			{
+				ledsA_[i] = CHSV(i*numstops_ + ihue_, saturation_, brightness_);
+				ihue_ += istep_;
+				if (ihue_ >= 255)
+				{
+					ihue_ = 0;
+				}
+			}
+		}
+		if (direction < 0)
+		{
+			log.writeLog("colorshift left", extremedebug);
+			for (int i = numleds_;i > 0; i--)
+			{
+				ledsA_[i] = CHSV(i*numstops_ + ihue_, saturation_, brightness_);
+				ihue_ -= istep_;
+				if (ihue_ <= 0)
+				{
+					ihue_ = 255;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0;i < numleds_; i++)
+		{
+			ledsA_[i] = CHSV(0, 0, 0);
+		}
+	}
+	LEDS.show();
 }

@@ -17,19 +17,21 @@ class neopixel :
 {
 
 private:
-	float	ihue_ = 0;
-	float	istep_ = 0.01;
-	int		idelay_ = 0;
-	int		bright_ = 1;
-	int		numstops_ = 0;
-	int		numleds_ = 0;
 
+	// rainnbow variables
+	int		rainbowCount_ = 0;
+	float	ihue_ = 0;
+	double	istep_ = 0.01;
+	int		numstops_ = round(255 / numleds_);
+
+	// LED properties
 	int		saturation_ = 0;
 	int		hue_ = 0;
 	int		brightness_ = 0;
-
+	int		numleds_ = 0;
 	CRGB	ledsA_[NUM_LEDS_1];
 
+	//FadeToTargetColor variables
 	HSVHue	previousColor_;
 	int		range_ = numleds_;
 	int		blubb_ = 0;
@@ -49,9 +51,16 @@ public:
 	bool setSaturation(int led, int saturation, logger &log);
 	bool setHue(int led, int hue, logger &log);
 	bool setBrightness(int led, int brightness, logger &log);
-	void fadeToTargetColor(int hue, logger &log);		// Ändert die aktuellöe farbe zu einer zielfarbe
+	void fadeToTargetColor(int led, int hue, logger &log);		// Ändert die aktuellöe farbe zu einer zielfarbe
 	CRGB* InitNeoPixel(int brightness, int saturation, logger &log);
 	void SlowlyIncreaseOrDecreaseBrightness(int led, bool sensorResult, int maxBrightness, logger& log);
+	void colorshift(int direction, bool sensorResult, logger &log);
+
+	// Set Steps dont use full integers use range between 0.50 - 0.01
+	int setStep(double step)
+	{
+		istep_ = step;
+	}
 
 	int GetHue()
 	{

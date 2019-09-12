@@ -84,6 +84,7 @@
     <ClInclude Include="actor.h" />
     <ClInclude Include="analogIn.h" />
     <ClInclude Include="analogOut.h" />
+    <ClInclude Include="directionEncoder.h" />
     <ClInclude Include="doggle.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="digitalOut.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="actor.cpp" />
     <ClCompile Include="analogIn.cpp" />
     <ClCompile Include="analogOut.cpp" />
+    <ClCompile Include="directionEncoder.cpp" />
     <ClCompile Include="doggle.cpp" />
     <ClCompile Include="digitalOut.cpp" />
     <ClCompile Include="gasSensor.cpp" />
