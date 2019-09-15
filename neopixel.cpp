@@ -3,8 +3,15 @@
 // @date           09.2019
 // @brief          neopixel Class
 
+
+#include "constants.h"
+#if (NodeMCUV3 == true)
+#define FASTLED_ESP8266_NODEMCU_PIN_ORDER
+#endif
+
 #include "neopixel.h"
 #include "FastLED.h"
+
 
 //Constructor
 neopixel::neopixel(String name, int pin, int numleds)
@@ -33,7 +40,7 @@ CRGB* neopixel::InitNeoPixel(int brightness, int saturation, logger &log)
 	LEDS.setBrightness(brightness_);
 	LEDS.setBrightness(saturation_);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA_, numleds_);
-	memset(ledsA_, 0, numleds_ * sizeof(struct CRGB));
+	//memset(ledsA_, 0, numleds_ * sizeof(struct CRGB));
 	return ledsA_;
 }
 

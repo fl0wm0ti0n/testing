@@ -12,7 +12,7 @@ logger::logger(t_log_level t, t_log_target g, String n)
 	switch (m_iLogTarget_)
 	{
 	case 0:
-		Serial.begin(9600);
+		Serial.begin(DEFAULT_BAUTRATE);
 			break;
 	case 1:
 		 // Netzwerk init - noch nicht implementiert!

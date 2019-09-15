@@ -83,17 +83,12 @@ bool directionEncoder::getSwitchValue(logger &log)
 bool directionEncoder::getSwitchValueDoggle(logger &log)
 {
 	log.writeLog("Callb - EnSwitchDoggle", extremedebug);
-	/*if (digitalRead(getPin()) == HIGH && bdoggleState_ != false)
+	if (digitalRead(getPin()))
 	{
-		log.writeLog("Button is false", sensordata);
-		bdoggleState_ = true;
+		bdoggleState_ = !bdoggleState_;
 	}
-	if (digitalRead(getPin()) == HIGH && bdoggleState_ != true)
-	{
-		log.writeLog("Button is true", sensordata);
-		bdoggleState_ = false;
-	}*/
-	return bdoggleState_ = !bdoggleState_;
+
+	return bdoggleState_;
 }
 
 bool directionEncoder::getSwitchLongValue(logger &log)

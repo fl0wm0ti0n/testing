@@ -12,6 +12,8 @@
 #include "WProgram.h"
 #endif
 
+#include	"constants.h""
+
 enum t_log_level
 {
 	disabled = -1,

@@ -7,9 +7,13 @@
 #include "WProgram.h"
 #endif
 
+#include "constants.h"
+#if (NodeMCUV3 == true)
+#define FASTLED_ESP8266_NODEMCU_PIN_ORDER
+#endif
+
 #include "actor.h"
 #include "FastLED.h"
-#include "constants.h"
 #include "logger.h"
 
 class neopixel :

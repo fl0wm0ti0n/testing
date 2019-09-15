@@ -43,6 +43,5 @@ public:
 	{
 		clicks_ = clicks;
 	}
-
 };
 #endif

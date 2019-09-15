@@ -7,9 +7,13 @@
 #include "WProgram.h"
 #endif
 
-// ACHTUNG: Alle Arduino Bibliotheken welche in anderen Klassen verwerdnet werden müssen zumindest zusätzlich auch hier inlcludet werden. Obwohl diese hier ausgegraut werden.
-#include "FastLED.h"
 #include "constants.h"
+#if (NodeMCUV3 == true)
+#define FASTLED_ESP8266_NODEMCU_PIN_ORDER
+#endif
+
+// ACHTUNG: Alle Arduino Bibliotheken welche in anderen Klassen verwendet werden müssen zumindest zusätzlich auch hier included werden. Obwohl diese hier ausgegraut werden.
+#include "FastLED.h"
 #include "logger.h"
 
 float ihue = 0;
@@ -25,7 +29,7 @@ inline CRGB* neopixelobjekt(int brightness, logger &log)
 	log.writeLog("Setup WS2812B...", debug);
 	LEDS.setBrightness(brightness);
 	LEDS.addLeds<WS2812B, PIN_WS2812_1, GRB>(ledsA, NUM_LEDS_1);
-	memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
+	//memset(ledsA, 0, NUM_LEDS_1 * sizeof(struct CRGB));
 	return ledsA;
 }
 
